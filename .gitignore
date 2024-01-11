@@ -1,0 +1,12 @@
+# directories
+node_modules
+coverage
+build
+
+# misc
+.DS_Store
+.eslintcache
+.env
+.csv
+.vscode
+**/yarn-error.log
