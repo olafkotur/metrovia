@@ -9,7 +9,8 @@
   "scripts": {
     "build": "react-scripts build",
     "start": "BROWSER=none react-scripts start",
-    "serve": "serve ./build"
+    "serve": "serve ./build",
+    "format": "prettier --write \"*/**/*.{js,jsx,ts,tsx,svg}\" --ignore \"build/**/*\""
   },
   "dependencies": {
     "@fontsource/inter": "^4.5.12",

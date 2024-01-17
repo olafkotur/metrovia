@@ -2,6 +2,7 @@
 node_modules
 coverage
 build
+generate
 
 # misc
 .DS_Store
@@ -10,3 +11,4 @@ build
 .csv
 .vscode
 **/yarn-error.log
+

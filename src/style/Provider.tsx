@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${(props) => props.theme.font};
     font-size: ${(props) => props.theme.fontSize.medium};
     color: ${(props) => props.theme.color.normal};
-    background: ${(props) => props.theme.backgroundColor.primary};
+    background: ${(props) => props.theme.color.white};
   }
 
   ::-webkit-scrollbar {
