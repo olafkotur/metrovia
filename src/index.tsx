@@ -4,7 +4,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
-import { Home } from './pages/Home';
+import { Game } from './pages/Game';
+import { Map } from './pages/Map';
+import { Setup } from './pages/Setup';
 import { ThemeProvider } from './style/Provider';
 import { RouteName } from './typings';
 
@@ -41,7 +43,9 @@ const AppInternal = (): ReactElement => {
       <PageContainer>
         <BrowserRouter>
           <Routes>
-            <Route path={RouteName.HOME} element={<Home />} />
+            <Route path={RouteName.SETUP} element={<Setup />} />
+            <Route path={RouteName.GAME} element={<Game />} />
+            <Route path={RouteName.MAP} element={<Map />} />
           </Routes>
         </BrowserRouter>
       </PageContainer>

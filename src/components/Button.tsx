@@ -18,7 +18,7 @@ const ButtonContainer = styled(motion.div)<{ disabled?: boolean }>`
 `;
 
 export const Button = ({ ...props }: ButtonProps): ReactElement => {
-  return <ButtonContainer {...props} {...ScaleOnTap({ depth: 0.9 })} />;
+  return <ButtonContainer {...props} {...ScaleOnTap({ depth: 0.95 })} />;
 };
 
 const IconButtonContainer = styled(Button)`
@@ -56,11 +56,11 @@ const LargeButtonContainer = styled(Button)<{ bg?: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  min-width: 80px;
-  width: ${(props) => props.width ?? ''};
-  border-radius: ${(props) => props.theme.borderRadius.medium};
-  background: ${(props) => props.bg ?? props.theme.backgroundColor.secondary};
+  height: 50px;
+  min-width: 250px;
+  margin: ${(props) => props.theme.spacing.medium} 0;
+  color: ${(props) => props.theme.color.white};
+  background: ${(props) => props.bg ?? props.theme.backgroundColor.faint};
 `;
 
 export const LargeButton = ({ ...props }: ButtonProps): ReactElement => {

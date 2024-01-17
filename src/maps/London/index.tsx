@@ -4,7 +4,6 @@ import { Line, Station } from '../../typings';
 export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Station[] }): ReactElement => {
   const removeLines = () => {
     for (const line of lines) {
-      continue;
       if (line.visible === true) continue;
 
       const lineElements = document.querySelectorAll(`[id=${line.id}]`) as any;
@@ -19,7 +18,6 @@ export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Statio
 
   const removeStations = () => {
     for (const station of stations) {
-      continue;
       if (station.visible === true) continue;
 
       const elements = document.querySelectorAll(`[id=${station.id}]`) as any;
