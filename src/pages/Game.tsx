@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -50,6 +50,10 @@ export const Game = (): ReactElement => {
   const navigate = useNavigate();
   const matchStation = useMatchStation();
 
+  const unlockedStations = useMemo(() => {
+    return stations.filter((v) => v.visible).length;
+  }, [stations]);
+
   const handleChange = (input: string) => {
     const station = matchStation(input);
     if (station != null) {
@@ -89,7 +93,7 @@ export const Game = (): ReactElement => {
         <Spacer horizontal={5} />
 
         <RowContainer>
-          <PointsText faint>27 stations</PointsText>
+          <PointsText faint>{unlockedStations} stations</PointsText>
           <Spacer horizontal={5} />
           <TimeText faint>{dayjs.unix(counter).format('mm:ss')}</TimeText>
           <IconButton size={28} onClick={() => window.location.reload()}>
