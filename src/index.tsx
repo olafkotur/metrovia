@@ -27,7 +27,7 @@ const AppContainer = styled.div`
 
 const PageContainer = styled.div`
   display: flex;
-  height: calc(100% - 30px);
+  height: 100%;
   width: 100%;
   position: relative;
   margin: ${(props) => props.theme.spacing.small};

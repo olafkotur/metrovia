@@ -14,6 +14,7 @@ export enum RouteName {
 }
 
 export enum IconName {
+  CLOSE = 'fa-solid fa-xmark',
   CHEVRON_UP = 'fa-solid fa-chevron-up',
   CHEVRON_RIGHT = 'fa-solid fa-chevron-right',
   CHEVRON_DOWN = 'fa-solid fa-chevron-down',

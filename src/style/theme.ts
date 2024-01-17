@@ -36,7 +36,7 @@ export const DEFAULT_THEME = {
     black: '#32323E',
   },
   backgroundColor: {
-    primary: '#E9ECF0',
+    primary: '#DFE6E9',
     secondary: '#F2F5F7',
     tertiary: 'rgba(0, 0, 0, 0.8)',
     faint: 'rgba(0, 0, 0, 0.4)',

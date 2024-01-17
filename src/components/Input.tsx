@@ -1,12 +1,6 @@
-import { motion } from 'framer-motion';
-import React, { HTMLInputTypeAttribute, ReactElement, useCallback, useRef, useState } from 'react';
+import React, { HTMLInputTypeAttribute, ReactElement } from 'react';
 import styled from 'styled-components';
-import { useOnClickout } from '../hooks';
-import { ScaleOnTap } from '../style/animations';
-import { IconName } from '../typings';
-import { IconButton } from './Button';
-import { ColumnContainer, SpaceBetweenContainer, Spacer } from './Common';
-import { Icon } from './Icon';
+import { ColumnContainer, Spacer } from './Common';
 import { MediumText } from './Text';
 
 export type SelectOption = { label: string; value: string };
@@ -17,6 +11,7 @@ interface InputProps {
   value?: string;
   label?: string;
   disabled?: boolean;
+  autoFocus?: boolean;
   options?: SelectOption[];
   bg?: string;
   icon?: ReactElement;
@@ -35,6 +30,12 @@ const InputContainer = styled.div<{ disabled?: boolean; bg?: string; margin?: bo
   border-radius: ${(props) => props.theme.borderRadius.medium};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 `;
+
+const InputLabelText = styled(MediumText)`
+  margin-left: ${(props) => props.theme.spacing.small};
+  margin-bottom: ${(props) => props.theme.spacing.small};
+`;
+
 const Input = styled.input`
   border: none;
   background: none;
@@ -49,9 +50,9 @@ const Input = styled.input`
     margin: 0;
   }
 `;
-const InputLabelText = styled(MediumText)`
-  margin-left: ${(props) => props.theme.spacing.small};
-  margin-bottom: ${(props) => props.theme.spacing.small};
+
+const TextInputContainer = styled(ColumnContainer)`
+  width: 100%;
 `;
 
 export const TextInput = ({
@@ -60,6 +61,7 @@ export const TextInput = ({
   label,
   placeholder,
   disabled,
+  autoFocus,
   bg,
   icon,
   type = 'text',
@@ -67,7 +69,7 @@ export const TextInput = ({
   onBlur,
 }: InputProps): ReactElement => {
   return (
-    <ColumnContainer>
+    <TextInputContainer>
       {label && <InputLabelText faint>{label}</InputLabelText>}
       <InputContainer disabled={disabled} bg={bg}>
         {icon}
@@ -78,11 +80,12 @@ export const TextInput = ({
           value={value}
           placeholder={placeholder}
           disabled={disabled}
+          autoFocus={autoFocus}
           onChange={(event) => onChange?.(event.target.value)}
           onBlur={(event) => onBlur?.(event.target.value)}
         />
       </InputContainer>
-    </ColumnContainer>
+    </TextInputContainer>
   );
 };
 
@@ -114,58 +117,5 @@ export const NumberInput = ({
         />
       </InputContainer>
     </ColumnContainer>
-  );
-};
-
-const SelectListContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  transform: translate(-10px, 95px);
-  background: inherit;
-  padding: ${(props) => props.theme.spacing.medium} 0;
-  border-radius: ${(props) => props.theme.borderRadius.medium};
-`;
-const SelectListOption = styled(motion.div)`
-  padding: ${(props) => props.theme.spacing.medium};
-`;
-
-export const SelectInput = ({ value, placeholder, disabled, options, bg, icon, onChange }: InputProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const hasOptions = (options && options.length > 0) ?? false;
-
-  useOnClickout([ref], () => {
-    setIsOpen(false);
-  });
-
-  const toggleOpen = useCallback(() => {
-    setIsOpen(!isOpen);
-  }, [isOpen, setIsOpen]);
-
-  return (
-    <InputContainer disabled={disabled} bg={bg} ref={ref}>
-      {icon}
-      {icon && <Spacer horizontal={5} />}
-      <SpaceBetweenContainer>
-        <MediumText>{value ?? placeholder}</MediumText>
-        <IconButton onClick={toggleOpen} disabled={!hasOptions}>
-          <Icon name={IconName.CHEVRON_DOWN} />
-        </IconButton>
-      </SpaceBetweenContainer>
-
-      {isOpen && hasOptions && (
-        <SelectListContainer>
-          {options?.map((option) => (
-            <SelectListOption
-              key={`select-list-option-${option.value}`}
-              onClick={() => onChange?.(option.value)}
-              {...ScaleOnTap({})}
-            >
-              {option.label}
-            </SelectListOption>
-          ))}
-        </SelectListContainer>
-      )}
-    </InputContainer>
   );
 };

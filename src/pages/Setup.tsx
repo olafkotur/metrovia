@@ -23,7 +23,9 @@ export const Setup = (): ReactElement => {
 
       <Spacer vertical={30} />
 
-      <LargeButton bg={DEFAULT_THEME.highlightColor.primary}>Start Game</LargeButton>
+      <LargeButton bg={DEFAULT_THEME.highlightColor.primary} onClick={() => navigate(RouteName.GAME)}>
+        Start Game
+      </LargeButton>
       <LargeButton onClick={() => navigate(RouteName.MAP)}>Change map</LargeButton>
     </SetupContainer>
   );

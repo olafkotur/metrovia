@@ -1,12 +1,76 @@
-import React, { ReactElement } from 'react';
+import dayjs from 'dayjs';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { Icon, IconButton, RowContainer, SmallText, Spacer, TextInput } from '../components';
 import { LondonMap } from '../maps/London';
 import { LONDON_LINES } from '../maps/London/lines';
 import { LONDON_STATIONS } from '../maps/London/stations';
+import { IconName, RouteName } from '../typings';
+
+const GameContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const GameBarContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  position: absolute;
+  width: 60%;
+  padding: ${(props) => props.theme.spacing.small};
+  bottom: ${(props) => props.theme.spacing.large};
+  border-radius: ${(props) => props.theme.borderRadius.medium};
+  background: ${(props) => props.theme.backgroundColor.secondary};
+`;
+
+const PointsText = styled(SmallText)`
+  width: 100px;
+  text-align: right;
+`;
+
+const TimeText = styled(SmallText)`
+  width: 50px;
+  text-align: left;
+`;
 
 export const Game = (): ReactElement => {
+  const [counter, setCounter] = useState(0);
+  const [value, setValue] = useState('');
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCounter((counter) => counter + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
-    <div style={{ width: '120vw', height: '120vh', overflow: 'scroll' }}>
+    <GameContainer>
+      <GameBarContainer>
+        <TextInput autoFocus value={value} onChange={setValue} placeholder="enter a station..." bg="transparent" />
+
+        <Spacer horizontal={5} />
+
+        <RowContainer>
+          <PointsText faint>27 stations</PointsText>
+          <Spacer horizontal={5} />
+          <TimeText faint>{dayjs.unix(counter).format('mm:ss')}</TimeText>
+          <IconButton size={28} onClick={() => navigate(RouteName.SETUP)}>
+            <Icon name={IconName.CLOSE} size={22} />
+          </IconButton>
+        </RowContainer>
+      </GameBarContainer>
       <LondonMap lines={LONDON_LINES} stations={LONDON_STATIONS} />
-    </div>
+    </GameContainer>
   );
 };
