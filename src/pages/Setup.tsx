@@ -26,6 +26,7 @@ export const Setup = (): ReactElement => {
       <LargeButton bg={DEFAULT_THEME.highlightColor.primary} onClick={() => navigate(RouteName.GAME)}>
         Start Game
       </LargeButton>
+      <LargeButton onClick={() => navigate(RouteName.PREVIEW)}>Preview map</LargeButton>
       <LargeButton onClick={() => navigate(RouteName.MAP)}>Change map</LargeButton>
     </SetupContainer>
   );

@@ -11,10 +11,12 @@ export enum RouteName {
   SETUP = '/',
   GAME = '/game',
   MAP = '/map',
+  PREVIEW = '/preview',
 }
 
 export enum IconName {
   CLOSE = 'fa-solid fa-xmark',
+  ROTATE = 'fa-solid fa-rotate-right',
   CHEVRON_UP = 'fa-solid fa-chevron-up',
   CHEVRON_RIGHT = 'fa-solid fa-chevron-right',
   CHEVRON_DOWN = 'fa-solid fa-chevron-down',

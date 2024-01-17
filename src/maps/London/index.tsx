@@ -18,11 +18,9 @@ export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Statio
 
   const removeStations = () => {
     for (const station of stations) {
-      if (station.visible === true) continue;
-
       const elements = document.querySelectorAll(`[id=${station.id}]`) as any;
       elements.forEach((element: any) => {
-        element.style.visibility = 'hidden';
+        element.style.visibility = station.visible ? 'visible' : 'hidden';
       });
     }
   };
@@ -30,7 +28,7 @@ export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Statio
   useEffect(() => {
     removeLines();
     removeStations();
-  }, []);
+  }, [lines, stations]);
 
   return (
     <svg
