@@ -40,7 +40,7 @@ export const DEFAULT_THEME = {
     secondary: '#F2F5F7',
     tertiary: 'rgba(0, 0, 0, 0.8)',
     faint: 'rgba(0, 0, 0, 0.4)',
-    selected: 'rgba(0, 0, 0, 0.2)',
+    selected: '#b2bec3',
     backdrop: 'rgba(0, 0, 0, 0.9)',
   },
   highlightColor: {

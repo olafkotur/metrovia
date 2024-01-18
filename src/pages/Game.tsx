@@ -1,16 +1,16 @@
-import dayjs from 'dayjs';
 import { debounce } from 'lodash';
 import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { Icon, IconButton, RowContainer, SmallText, Spacer, TextInput } from '../components';
-import { MATCH_DELAY_MS } from '../const';
+import { GAME_TIME_LIMIT, MATCH_DELAY_MS } from '../const';
 import { useMatchStation } from '../hooks';
 import { LondonMap } from '../maps/London';
 import { LONDON_LINES } from '../maps/London/lines';
 import { LONDON_STATIONS } from '../maps/London/stations';
 import { SelectedMapState, SelectedModeState } from '../state';
+import { DEFAULT_THEME } from '../style/theme';
 import { IconName, MapName, ModeName, RouteName, Station } from '../typings';
 
 const GameContainer = styled.div`
@@ -46,7 +46,7 @@ const TimeText = styled(SmallText)`
 export const Game = (): ReactElement => {
   const selectedMap = useRecoilValue(SelectedMapState);
   const selectedMode = useRecoilValue(SelectedModeState);
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(GAME_TIME_LIMIT);
   const [value, setValue] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
 
@@ -56,6 +56,19 @@ export const Game = (): ReactElement => {
   const unlockedStations = useMemo(() => {
     return stations.filter((v) => v.visible).length;
   }, [stations]);
+
+  const remainingTime = useMemo(() => {
+    if (selectedMode !== ModeName.TIME_LIMIT) return null;
+
+    const minutes = Math.floor(counter / 60);
+    const seconds = counter % 60;
+    const formattedCounter =
+      new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(minutes) +
+      ':' +
+      new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(seconds);
+
+    return formattedCounter;
+  }, [selectedMode, counter]);
 
   const debouncedMatchStations = useCallback(
     debounce((input: string) => {
@@ -73,6 +86,8 @@ export const Game = (): ReactElement => {
     debouncedMatchStations(input);
   };
 
+  const handleGameEnd = () => {};
+
   useEffect(() => {
     if (selectedMap === MapName.LONDON) {
       setStations(LONDON_STATIONS);
@@ -83,12 +98,18 @@ export const Game = (): ReactElement => {
     if (selectedMode !== ModeName.TIME_LIMIT) return;
 
     const timer = setInterval(() => {
-      setCounter((counter) => counter + 1);
+      setCounter((counter) => {
+        if (counter > 0) {
+          return counter - 1;
+        } else {
+          clearInterval(timer);
+          handleGameEnd();
+          return 0;
+        }
+      });
     }, 1000);
 
-    return () => {
-      clearInterval(timer);
-    };
+    return () => clearInterval(timer); // Clean up the interval on unmount
   }, []);
 
   return (
@@ -103,7 +124,11 @@ export const Game = (): ReactElement => {
             {unlockedStations} / {stations.length}
           </PointsText>
           <Spacer horizontal={5} />
-          {selectedMode === ModeName.TIME_LIMIT && <TimeText faint>{dayjs.unix(counter).format('mm:ss')}</TimeText>}
+          {selectedMode === ModeName.TIME_LIMIT && (
+            <TimeText faint color={remainingTime === '00:00' ? DEFAULT_THEME.color.danger : undefined}>
+              {remainingTime}
+            </TimeText>
+          )}
           <IconButton size={28} onClick={() => window.location.reload()}>
             <Icon name={IconName.ROTATE} size={20} />
           </IconButton>

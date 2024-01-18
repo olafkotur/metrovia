@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Icon, IconButton } from '../components';
 import { LondonMap } from '../maps/London';
 import { LONDON_LINES } from '../maps/London/lines';
+import { DEFAULT_THEME } from '../style/theme';
 import { IconName, RouteName } from '../typings';
 
 const PreviewContainer = styled.div`
@@ -25,7 +26,7 @@ export const Preview = (): ReactElement => {
 
   return (
     <PreviewContainer>
-      <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)}>
+      <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)} bg={DEFAULT_THEME.backgroundColor.primary}>
         <Icon name={IconName.CLOSE} size={22} />
       </CloseButton>
       <LondonMap lines={LONDON_LINES} stations={[]} />
