@@ -28,6 +28,7 @@ export const Setup = (): ReactElement => {
       </LargeButton>
       <LargeButton onClick={() => navigate(RouteName.PREVIEW)}>Preview map</LargeButton>
       <LargeButton onClick={() => navigate(RouteName.MAP)}>Change map</LargeButton>
+      <LargeButton onClick={() => navigate(RouteName.MODE)}>Game mode</LargeButton>
     </SetupContainer>
   );
 };

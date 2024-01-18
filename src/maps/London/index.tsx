@@ -1,7 +1,12 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
+import { useMapZoom } from '../../hooks';
 import { Line, Station } from '../../typings';
 
+const initialViewbox = { x: 64.094, y: 122.25, width: 985.889, height: 657.072 };
+
 export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Station[] }): ReactElement => {
+  const ref = useRef(null);
+
   const removeLines = () => {
     for (const line of lines) {
       if (line.visible === true) continue;
@@ -25,6 +30,8 @@ export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Statio
     }
   };
 
+  useMapZoom({ ref, initialViewbox });
+
   useEffect(() => {
     removeLines();
     removeStations();
@@ -32,6 +39,7 @@ export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Statio
 
   return (
     <svg
+      ref={ref}
       id="status-map"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -43,6 +51,7 @@ export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Statio
       viewBox="64.094 122.25 985.889 657.072"
       enableBackground="new 0 0 1247.244 907.087"
       xmlSpace="preserve"
+      cursor="grab"
     >
       <g id="river">
         <g id="river_1_">

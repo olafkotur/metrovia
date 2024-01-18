@@ -8,8 +8,8 @@ import { useMatchStation } from '../hooks';
 import { LondonMap } from '../maps/London';
 import { LONDON_LINES } from '../maps/London/lines';
 import { LONDON_STATIONS } from '../maps/London/stations';
-import { SelectedMapState } from '../state';
-import { IconName, MapName, RouteName, Station } from '../typings';
+import { SelectedMapState, SelectedModeState } from '../state';
+import { IconName, MapName, ModeName, RouteName, Station } from '../typings';
 
 const GameContainer = styled.div`
   display: flex;
@@ -43,6 +43,7 @@ const TimeText = styled(SmallText)`
 
 export const Game = (): ReactElement => {
   const selectedMap = useRecoilValue(SelectedMapState);
+  const selectedMode = useRecoilValue(SelectedModeState);
   const [counter, setCounter] = useState(0);
   const [value, setValue] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
@@ -76,6 +77,8 @@ export const Game = (): ReactElement => {
   }, [selectedMap]);
 
   useEffect(() => {
+    if (selectedMode !== ModeName.TIME_LIMIT) return;
+
     const timer = setInterval(() => {
       setCounter((counter) => counter + 1);
     }, 1000);
@@ -95,7 +98,7 @@ export const Game = (): ReactElement => {
         <RowContainer>
           <PointsText faint>{unlockedStations} stations</PointsText>
           <Spacer horizontal={5} />
-          <TimeText faint>{dayjs.unix(counter).format('mm:ss')}</TimeText>
+          {selectedMode === ModeName.TIME_LIMIT && <TimeText faint>{dayjs.unix(counter).format('mm:ss')}</TimeText>}
           <IconButton size={28} onClick={() => window.location.reload()}>
             <Icon name={IconName.ROTATE} size={20} />
           </IconButton>

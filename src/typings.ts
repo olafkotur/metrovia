@@ -10,8 +10,9 @@ export enum Environment {
 export enum RouteName {
   SETUP = '/',
   GAME = '/game',
-  MAP = '/map',
   PREVIEW = '/preview',
+  MAP = '/map',
+  MODE = '/mode',
 }
 
 export enum IconName {
@@ -29,6 +30,12 @@ export enum MapName {
   OSLO = 'Oslo',
 }
 
+export enum ModeName {
+  TIME_LIMIT = 'Time limit',
+  UNLIMITED = 'Unlimited',
+  SINGLE_LINE = 'Single line',
+}
+
 export interface Line {
   id: string;
   name: string;
@@ -40,4 +47,11 @@ export interface Station {
   id: string;
   name: string;
   visible: boolean;
+}
+
+export interface ViewBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }

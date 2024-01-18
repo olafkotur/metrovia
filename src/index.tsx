@@ -6,6 +6,7 @@ import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 import { Game } from './pages/Game';
 import { Map } from './pages/Map';
+import { Mode } from './pages/Mode';
 import { Preview } from './pages/Preview';
 import { Setup } from './pages/Setup';
 import { ThemeProvider } from './style/Provider';
@@ -48,6 +49,7 @@ const AppInternal = (): ReactElement => {
             <Route path={RouteName.GAME} element={<Game />} />
             <Route path={RouteName.MAP} element={<Map />} />
             <Route path={RouteName.PREVIEW} element={<Preview />} />
+            <Route path={RouteName.MODE} element={<Mode />} />
           </Routes>
         </BrowserRouter>
       </PageContainer>
