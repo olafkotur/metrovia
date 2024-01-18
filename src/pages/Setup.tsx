@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { LargeButton, Spacer, VeryLargeText } from '../components';
+import { LargeButton, MapBackground, Spacer, VeryLargeText } from '../components';
 import { useShowStations, useStartGame } from '../hooks';
 import { DEFAULT_THEME } from '../style/theme';
 import { RouteName } from '../typings';
@@ -31,17 +31,21 @@ export const Setup = (): ReactElement => {
   };
 
   return (
-    <SetupContainer>
-      <VeryLargeText>Metrofinder</VeryLargeText>
+    <>
+      <SetupContainer>
+        <VeryLargeText>Metrofinder</VeryLargeText>
 
-      <Spacer vertical={30} />
+        <Spacer vertical={30} />
 
-      <LargeButton bg={DEFAULT_THEME.highlightColor.primary} onClick={handleStartGame}>
-        Start Game
-      </LargeButton>
-      <LargeButton onClick={handlePreview}>Preview map</LargeButton>
-      <LargeButton onClick={() => navigate(RouteName.MAP)}>Change map</LargeButton>
-      <LargeButton onClick={() => navigate(RouteName.MODE)}>Game mode</LargeButton>
-    </SetupContainer>
+        <LargeButton bg={DEFAULT_THEME.highlightColor.primary} onClick={handleStartGame}>
+          Start Game
+        </LargeButton>
+        <LargeButton onClick={handlePreview}>Preview map</LargeButton>
+        <LargeButton onClick={() => navigate(RouteName.MAP)}>Change map</LargeButton>
+        <LargeButton onClick={() => navigate(RouteName.MODE)}>Game mode</LargeButton>
+      </SetupContainer>
+
+      <MapBackground />
+    </>
   );
 };

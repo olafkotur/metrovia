@@ -28,7 +28,7 @@ export const DEFAULT_THEME = {
     veryLarge: '20px',
   },
   color: {
-    faint: 'rgba(0, 0, 0, 0.6)',
+    faint: 'rgba(0, 0, 0, 0.4)',
     normal: 'rgba(0, 0, 0, 1)',
     danger: 'rgba(227, 66, 66, 0.8)',
     inverted: '#ecf0f1',
@@ -39,8 +39,8 @@ export const DEFAULT_THEME = {
     primary: '#DFE6E9',
     secondary: '#F2F5F7',
     tertiary: 'rgba(0, 0, 0, 0.8)',
-    faint: 'rgba(0, 0, 0, 0.4)',
-    selected: '#b2bec3',
+    faint: '#56504E',
+    selected: '#2A2727',
     backdrop: 'rgba(0, 0, 0, 0.9)',
   },
   highlightColor: {

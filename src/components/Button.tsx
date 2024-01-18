@@ -32,7 +32,7 @@ const IconButtonContainer = styled(Button)`
   width: ${(props) => `${props.size}px` ?? 'auto'};
 
   &:hover {
-    background: ${(props) => props.theme.backgroundColor.selected};
+    background: ${(props) => props.theme.color.faint};
   }
 `;
 
