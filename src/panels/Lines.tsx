@@ -1,10 +1,10 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useMemo } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { Button, SmallText } from '../components';
-import { LinesState, SelectedModeState } from '../state';
+import { Button, Icon, SmallText, VerySmallText } from '../components';
+import { LinesState, SelectedModeState, StationsState } from '../state';
 import { DEFAULT_THEME } from '../style/theme';
-import { Line as LineType, ModeName } from '../typings';
+import { IconName, Line as LineType, ModeName } from '../typings';
 
 const Container = styled.div`
   display: flex;
@@ -14,6 +14,7 @@ const Container = styled.div`
 
 export const Lines = (): ReactElement => {
   const [lines, setLines] = useRecoilState(LinesState);
+  const [stations, setStations] = useRecoilState(StationsState);
 
   const handleOnClick = useCallback(
     (line: LineType) => {
@@ -24,9 +25,18 @@ export const Lines = (): ReactElement => {
         }
         return v;
       });
+
+      const updatedStations = stations.map((station) => {
+        if (updatedLine.visible === false && station.lines.includes(line.id)) {
+          return { ...station, visible: false };
+        }
+        return station;
+      });
+
       setLines(updatedLines);
+      setStations(updatedStations);
     },
-    [lines, setLines],
+    [lines, stations, setLines],
   );
 
   return (
@@ -43,21 +53,38 @@ const LineContainer = styled(Button)<{ bg: string }>`
   flex-direction: row;
   align-items: center;
   height: 30px;
+  justify-content: space-between;
   background: ${(props) => props.bg};
   margin: ${(props) => props.theme.spacing.verySmall} 0;
   padding: ${(props) => props.theme.spacing.medium};
   border-radius: ${(props) => props.theme.borderRadius.medium};
 `;
 
-const Line = (data: LineType & { onClick: (value: LineType) => void }): ReactElement => {
-  const { name, color, visible, onClick } = data;
-  const background = visible ? color : DEFAULT_THEME.backgroundColor.faint;
-
+const Line = ({ onClick, ...data }: LineType & { onClick: (value: LineType) => void }): ReactElement => {
+  const stations = useRecoilValue(StationsState);
   const selectedMode = useRecoilValue(SelectedModeState);
+
+  const background = data.visible ? data.color : DEFAULT_THEME.backgroundColor.faint;
+
+  const lineStations = useMemo(() => {
+    return stations.filter((station) => station.lines.includes(data.id));
+  }, [stations]);
+
+  const visibleStationCount = useMemo(() => {
+    return lineStations.filter((station) => station.visible).length;
+  }, [lineStations]);
+
+  const isComplete = lineStations.length === visibleStationCount;
 
   return (
     <LineContainer bg={background} onClick={() => onClick(data)} disabled={selectedMode !== ModeName.CUSTOM_LINES}>
-      <SmallText color={DEFAULT_THEME.color.white}>{name}</SmallText>
+      <SmallText color={DEFAULT_THEME.color.white}>{data.name}</SmallText>
+      {data.visible && isComplete === false && (
+        <VerySmallText color={DEFAULT_THEME.color.white}>
+          {visibleStationCount}/{lineStations.length}
+        </VerySmallText>
+      )}
+      {isComplete && <Icon name={IconName.CIRCLE_CHECK} color={DEFAULT_THEME.color.white} opacity={1} />}
     </LineContainer>
   );
 };

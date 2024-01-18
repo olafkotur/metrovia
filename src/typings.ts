@@ -13,6 +13,7 @@ export enum IconName {
   VOLUME = 'fa-solid fa-volume-low',
   VOLUME_MUTE = 'fa-solid fa-volume-off',
   TRAIN = 'fa-solid fa-train-subway',
+  CIRCLE_CHECK = 'fa-solid fa-circle-check',
   CHEVRON_UP = 'fa-solid fa-chevron-up',
   CHEVRON_RIGHT = 'fa-solid fa-chevron-right',
   CHEVRON_DOWN = 'fa-solid fa-chevron-down',

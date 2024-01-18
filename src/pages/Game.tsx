@@ -8,6 +8,7 @@ import { useFormatRemainingTime, useMatchStation } from '../hooks';
 import { LondonMap } from '../maps/London';
 import {
   GameStatusState,
+  LinesState,
   ModalState,
   MutedState,
   PanelState,
@@ -70,6 +71,7 @@ export const Game = (): ReactElement => {
   const [secondsRemaining, setSecondsRemaining] = useRecoilState(SecondsRemainingState);
   const [panel, setPanel] = useRecoilState(PanelState);
 
+  const lines = useRecoilValue(LinesState);
   const selectedMode = useRecoilValue(SelectedModeState);
   const setModal = useSetRecoilState(ModalState);
   const setGameStatus = useSetRecoilState(GameStatusState);
@@ -77,22 +79,31 @@ export const Game = (): ReactElement => {
   const matchStation = useMatchStation();
   const formatRemainingTime = useFormatRemainingTime();
 
+  const lineStations = useMemo(() => {
+    const visibleLines = lines.filter((line) => line.visible);
+    return stations.filter((station) => {
+      return station.lines.some((lineId) => visibleLines.some((line) => line.id === lineId));
+    });
+  }, [lines, stations]);
+
+  console.log({ lineStations });
+
   const unlockedStations = useMemo(() => {
-    return stations.filter((v) => v.visible).length;
-  }, [stations]);
+    return lineStations.filter((v) => v.visible).length;
+  }, [lineStations]);
 
   const remainingTime = useMemo(() => formatRemainingTime(secondsRemaining), [secondsRemaining]);
 
   const debouncedMatchStations = useCallback(
     debounce((input: string) => {
-      const station = matchStation(input, stations);
+      const station = matchStation(input, lineStations);
       if (station == null) return;
 
       muted === false && sound.play();
       setStations((stations) => stations.map((s) => (s.id === station.id ? { ...s, visible: true } : s)));
       setValue('');
     }, MATCH_DELAY_MS),
-    [muted, stations, matchStation, setStations, setValue],
+    [muted, lineStations, matchStation, setStations, setValue],
   );
 
   const handleChange = useCallback(
@@ -104,10 +115,10 @@ export const Game = (): ReactElement => {
   );
 
   const handleGameEnd = useCallback(() => {
-    const isSuccess = unlockedStations === stations.length;
+    const isSuccess = unlockedStations === lineStations.length;
     setGameStatus(isSuccess ? GameStatusName.SUCCESS : GameStatusName.FAILED);
     setModal(ModalName.GAME_STATUS);
-  }, [unlockedStations, stations, setModal]);
+  }, [unlockedStations, lineStations, setModal]);
 
   const handleGameTimer = useCallback(() => {
     if (selectedMode !== ModeName.TIME_LIMIT) return null;
@@ -124,7 +135,7 @@ export const Game = (): ReactElement => {
     }, 1000);
 
     return timer;
-  }, [selectedMode, stations, unlockedStations, setSecondsRemaining, handleGameEnd]);
+  }, [selectedMode, , setSecondsRemaining, handleGameEnd]);
 
   useEffect(() => {
     if (selectedMode !== ModeName.TIME_LIMIT || secondsRemaining > 0) return;
@@ -148,7 +159,7 @@ export const Game = (): ReactElement => {
 
         <RowContainer>
           <PointsText faint>
-            {unlockedStations} / {stations.length}
+            {unlockedStations}/{lineStations.length}
           </PointsText>
 
           <Spacer horizontal={5} />
