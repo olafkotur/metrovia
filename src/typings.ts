@@ -66,6 +66,7 @@ export interface Station {
   id: string;
   name: string;
   visible: boolean;
+  lines: string[];
 }
 
 export interface ViewBox {
