@@ -2,15 +2,22 @@ import { debounce } from 'lodash';
 import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Icon, IconButton, RowContainer, SmallText, Spacer, Spinner, TextInput } from '../components';
-import { GAME_TIME_LIMIT, MATCH_DELAY_MS } from '../const';
+import { Icon, IconButton, RowContainer, SmallText, Spacer, TextInput } from '../components';
+import { MATCH_DELAY_MS } from '../const';
 import { useFormatRemainingTime, useMatchStation } from '../hooks';
 import { LondonMap } from '../maps/London';
 import { LONDON_LINES } from '../maps/London/lines';
-import { LONDON_STATIONS } from '../maps/London/stations';
-import { GameStatusState, ModalState, MutedState, SelectedMapState, SelectedModeState } from '../state';
+import {
+  GameStatusState,
+  ModalState,
+  MutedState,
+  PanelState,
+  SecondsRemainingState,
+  SelectedModeState,
+  StationsState,
+} from '../state';
 import { DEFAULT_THEME } from '../style/theme';
-import { GameStatusName, IconName, MapName, ModalName, ModeName, Station } from '../typings';
+import { GameStatusName, IconName, ModalName, ModeName, PanelName } from '../typings';
 
 const sound = new Audio('ding.mp3');
 
@@ -27,9 +34,10 @@ const GameBarContainer = styled.div`
   justify-content: space-between;
   flex-direction: row;
   position: absolute;
-  width: 60%;
+  width: 50%;
+  min-width: 600px;
   padding: ${(props) => props.theme.spacing.small};
-  bottom: ${(props) => props.theme.spacing.large};
+  bottom: ${(props) => props.theme.spacing.medium};
   border-radius: ${(props) => props.theme.borderRadius.medium};
   background: ${(props) => props.theme.backgroundColor.secondary};
 `;
@@ -57,14 +65,13 @@ const LoaderContainer = styled.div`
 `;
 
 export const Game = (): ReactElement => {
-  const selectedMap = useRecoilValue(SelectedMapState);
-  const selectedMode = useRecoilValue(SelectedModeState);
-  const [counter, setCounter] = useState(GAME_TIME_LIMIT);
   const [value, setValue] = useState('');
-  const [stations, setStations] = useState<Station[]>([]);
-  const [loading, setLoading] = useState(true);
-
+  const [stations, setStations] = useRecoilState(StationsState);
   const [muted, setMuted] = useRecoilState(MutedState);
+  const [secondsRemaining, setSecondsRemaining] = useRecoilState(SecondsRemainingState);
+  const [panel, setPanel] = useRecoilState(PanelState);
+
+  const selectedMode = useRecoilValue(SelectedModeState);
   const setModal = useSetRecoilState(ModalState);
   const setGameStatus = useSetRecoilState(GameStatusState);
 
@@ -75,7 +82,7 @@ export const Game = (): ReactElement => {
     return stations.filter((v) => v.visible).length;
   }, [stations]);
 
-  const remainingTime = useMemo(() => formatRemainingTime(counter), [counter]);
+  const remainingTime = useMemo(() => formatRemainingTime(secondsRemaining), [secondsRemaining]);
 
   const debouncedMatchStations = useCallback(
     debounce((input: string) => {
@@ -97,29 +104,6 @@ export const Game = (): ReactElement => {
     [setValue, debouncedMatchStations],
   );
 
-  const handleGameReset = useCallback(() => {
-    setLoading(true);
-
-    // reset map logic
-    if (selectedMap === MapName.LONDON) {
-      setStations(LONDON_STATIONS);
-    }
-
-    // reset mode logic
-    if (selectedMode === ModeName.TIME_LIMIT) {
-      setCounter(GAME_TIME_LIMIT);
-    }
-
-    setValue('');
-
-    setTimeout(() => setLoading(false), 1000);
-  }, [selectedMap, selectedMode, setStations, setValue]);
-
-  const handleGameExit = useCallback(() => {
-    setGameStatus(GameStatusName.EXIT);
-    setModal(ModalName.GAME_STATUS);
-  }, [setGameStatus, setModal]);
-
   const handleGameEnd = useCallback(() => {
     const isSuccess = unlockedStations === stations.length;
     setGameStatus(isSuccess ? GameStatusName.SUCCESS : GameStatusName.FAILED);
@@ -130,9 +114,9 @@ export const Game = (): ReactElement => {
     if (selectedMode !== ModeName.TIME_LIMIT) return null;
 
     const timer = setInterval(() => {
-      setCounter((counter) => {
-        if (counter > 0) {
-          return counter - 1;
+      setSecondsRemaining((seconds) => {
+        if (seconds > 0) {
+          return seconds - 1;
         } else {
           clearInterval(timer);
           return 0;
@@ -141,16 +125,14 @@ export const Game = (): ReactElement => {
     }, 1000);
 
     return timer;
-  }, [selectedMode, stations, unlockedStations, setCounter, handleGameEnd]);
+  }, [selectedMode, stations, unlockedStations, setSecondsRemaining, handleGameEnd]);
 
   useEffect(() => {
-    if (counter > 0) return;
-
+    if (secondsRemaining > 0) return;
     handleGameEnd();
-  }, [counter, handleGameEnd]);
+  }, [secondsRemaining, handleGameEnd]);
 
   useEffect(() => {
-    handleGameReset();
     const timer = handleGameTimer();
 
     return () => {
@@ -160,11 +142,6 @@ export const Game = (): ReactElement => {
 
   return (
     <GameContainer>
-      {loading && (
-        <LoaderContainer>
-          <Spinner size="50px" />
-        </LoaderContainer>
-      )}
       <GameBarContainer>
         <TextInput autoFocus value={value} onChange={handleChange} placeholder="enter a station..." bg="transparent" />
 
@@ -174,12 +151,23 @@ export const Game = (): ReactElement => {
           <PointsText faint>
             {unlockedStations} / {stations.length}
           </PointsText>
+
           <Spacer horizontal={5} />
+
           {selectedMode === ModeName.TIME_LIMIT && (
             <TimeText faint color={remainingTime === '00:00' ? DEFAULT_THEME.color.danger : undefined}>
               {remainingTime}
             </TimeText>
           )}
+
+          <IconButton
+            size={28}
+            bg={panel === PanelName.CHOOSE_LINES ? DEFAULT_THEME.backgroundColor.selected : undefined}
+            onClick={() => setPanel(panel === PanelName.CHOOSE_LINES ? null : PanelName.CHOOSE_LINES)}
+          >
+            <Icon name={IconName.TRAIN} size={20} />
+          </IconButton>
+          <Spacer horizontal={1} />
           <IconButton size={28} onClick={() => setMuted((value) => !value)}>
             <Icon
               size={20}
@@ -188,10 +176,24 @@ export const Game = (): ReactElement => {
               opacity={muted ? 1 : undefined}
             />
           </IconButton>
-          <IconButton size={28} onClick={handleGameReset}>
+          <Spacer horizontal={1} />
+          <IconButton
+            size={28}
+            onClick={() => {
+              setGameStatus(GameStatusName.RESET);
+              setModal(ModalName.GAME_STATUS);
+            }}
+          >
             <Icon name={IconName.ROTATE} size={20} />
           </IconButton>
-          <IconButton size={28} onClick={handleGameExit}>
+          <Spacer horizontal={1} />
+          <IconButton
+            size={28}
+            onClick={() => {
+              setGameStatus(GameStatusName.EXIT);
+              setModal(ModalName.GAME_STATUS);
+            }}
+          >
             <Icon size={22} name={IconName.CLOSE} />
           </IconButton>
         </RowContainer>

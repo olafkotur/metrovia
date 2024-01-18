@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { LargeButton, LargeText, MediumText, SpaceBetweenContainer, Spacer } from '../components';
+import { useStartGame } from '../hooks';
 import { GameStatusState, ModalState } from '../state';
 import { DEFAULT_THEME } from '../style/theme';
 import { GameStatusName, RouteName } from '../typings';
@@ -26,6 +27,7 @@ export const GameStatus = (): ReactElement => {
     <Container>
       {status === GameStatusName.SUCCESS && <SuccessContent />}
       {status === GameStatusName.FAILED && <FailedContent />}
+      {status === GameStatusName.RESET && <ResetContent />}
       {status === GameStatusName.EXIT && <ExitContent />}
     </Container>
   );
@@ -79,6 +81,35 @@ const FailedContent = (): ReactElement => {
       >
         Continue
       </SingleButton>
+    </>
+  );
+};
+
+const ResetContent = (): ReactElement => {
+  const resetModal = useResetRecoilState(ModalState);
+  const startGame = useStartGame();
+
+  return (
+    <>
+      <LargeText>Are you sure?</LargeText>
+      <Spacer vertical={5} />
+
+      <MediumText>Resetting the game will mean you will lose all progress, do you want to do this?</MediumText>
+
+      <Spacer vertical={5} />
+
+      <SpaceBetweenContainer>
+        <DualButton
+          bg={DEFAULT_THEME.highlightColor.primary}
+          onClick={() => {
+            startGame();
+            resetModal();
+          }}
+        >
+          Yes
+        </DualButton>
+        <DualButton onClick={resetModal}>No</DualButton>
+      </SpaceBetweenContainer>
     </>
   );
 };

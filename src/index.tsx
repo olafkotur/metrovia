@@ -10,6 +10,7 @@ import { Map } from './pages/Map';
 import { Mode } from './pages/Mode';
 import { Preview } from './pages/Preview';
 import { Setup } from './pages/Setup';
+import { Panels } from './panels';
 import { ThemeProvider } from './style/Provider';
 import { RouteName } from './typings';
 
@@ -45,6 +46,7 @@ const AppInternal = (): ReactElement => {
     <AppContainer>
       <BrowserRouter>
         <Modals />
+        <Panels />
         <PageContainer>
           <Routes>
             <Route path={RouteName.SETUP} element={<Setup />} />

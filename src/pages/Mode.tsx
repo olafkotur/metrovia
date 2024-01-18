@@ -27,7 +27,7 @@ export const Mode = (): ReactElement => {
 
       <ModeButton name={ModeName.TIME_LIMIT} />
       <ModeButton name={ModeName.UNLIMITED} />
-      <ModeButton disabled name={ModeName.SINGLE_LINE} />
+      <ModeButton name={ModeName.SINGLE_LINE} />
 
       <LargeButton bg={DEFAULT_THEME.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
         Done

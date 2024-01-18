@@ -1,5 +1,6 @@
 export * from './use-breakpoints';
 export * from './use-format';
+export * from './use-game';
 export * from './use-map-zoom';
 export * from './use-match-station';
 export * from './use-on-clickout';

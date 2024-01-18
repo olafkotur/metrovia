@@ -12,6 +12,7 @@ export enum IconName {
   ROTATE = 'fa-solid fa-rotate-right',
   VOLUME = 'fa-solid fa-volume-low',
   VOLUME_MUTE = 'fa-solid fa-volume-off',
+  TRAIN = 'fa-solid fa-train-subway',
   CHEVRON_UP = 'fa-solid fa-chevron-up',
   CHEVRON_RIGHT = 'fa-solid fa-chevron-right',
   CHEVRON_DOWN = 'fa-solid fa-chevron-down',
@@ -30,6 +31,10 @@ export enum ModalName {
   GAME_STATUS = 'game-status',
 }
 
+export enum PanelName {
+  CHOOSE_LINES = 'choose-lines',
+}
+
 export enum MapName {
   LONDON = 'London',
   PARIS = 'Paris',
@@ -46,6 +51,7 @@ export enum GameStatusName {
   FAILED = 'failed',
   SUCCESS = 'success',
   EXIT = 'exit',
+  RESET = 'reset',
 }
 
 export interface Line {
