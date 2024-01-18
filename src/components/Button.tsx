@@ -57,7 +57,7 @@ const LargeButtonContainer = styled(Button)<{ bg?: string }>`
   justify-content: center;
   align-items: center;
   height: 50px;
-  min-width: 250px;
+  width: 250px;
   margin: ${(props) => props.theme.spacing.medium} 0;
   color: ${(props) => props.theme.color.white};
   background: ${(props) => props.bg ?? props.theme.backgroundColor.faint};

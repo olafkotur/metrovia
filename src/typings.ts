@@ -7,6 +7,17 @@ export enum Environment {
   PRODUCTION = 'production',
 }
 
+export enum IconName {
+  CLOSE = 'fa-solid fa-xmark',
+  ROTATE = 'fa-solid fa-rotate-right',
+  VOLUME = 'fa-solid fa-volume-low',
+  VOLUME_MUTE = 'fa-solid fa-volume-off',
+  CHEVRON_UP = 'fa-solid fa-chevron-up',
+  CHEVRON_RIGHT = 'fa-solid fa-chevron-right',
+  CHEVRON_DOWN = 'fa-solid fa-chevron-down',
+  CHEVRON_LEFT = 'fa-solid fa-chevron-left',
+}
+
 export enum RouteName {
   SETUP = '/',
   GAME = '/game',
@@ -15,13 +26,8 @@ export enum RouteName {
   MODE = '/mode',
 }
 
-export enum IconName {
-  CLOSE = 'fa-solid fa-xmark',
-  ROTATE = 'fa-solid fa-rotate-right',
-  CHEVRON_UP = 'fa-solid fa-chevron-up',
-  CHEVRON_RIGHT = 'fa-solid fa-chevron-right',
-  CHEVRON_DOWN = 'fa-solid fa-chevron-down',
-  CHEVRON_LEFT = 'fa-solid fa-chevron-left',
+export enum ModalName {
+  GAME_STATUS = 'game-status',
 }
 
 export enum MapName {
@@ -34,6 +40,12 @@ export enum ModeName {
   TIME_LIMIT = 'Time limit',
   UNLIMITED = 'Unlimited',
   SINGLE_LINE = 'Single line',
+}
+
+export enum GameStatusName {
+  FAILED = 'failed',
+  SUCCESS = 'success',
+  EXIT = 'exit',
 }
 
 export interface Line {

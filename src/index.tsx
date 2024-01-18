@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
+import { Modals } from './modals';
 import { Game } from './pages/Game';
 import { Map } from './pages/Map';
 import { Mode } from './pages/Mode';
@@ -42,8 +43,9 @@ const PageContainer = styled.div`
 const AppInternal = (): ReactElement => {
   return (
     <AppContainer>
-      <PageContainer>
-        <BrowserRouter>
+      <BrowserRouter>
+        <Modals />
+        <PageContainer>
           <Routes>
             <Route path={RouteName.SETUP} element={<Setup />} />
             <Route path={RouteName.GAME} element={<Game />} />
@@ -51,8 +53,8 @@ const AppInternal = (): ReactElement => {
             <Route path={RouteName.PREVIEW} element={<Preview />} />
             <Route path={RouteName.MODE} element={<Mode />} />
           </Routes>
-        </BrowserRouter>
-      </PageContainer>
+        </PageContainer>
+      </BrowserRouter>
     </AppContainer>
   );
 };

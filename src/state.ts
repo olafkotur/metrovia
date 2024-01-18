@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { MapName, ModeName } from './typings';
+import { GameStatusName, MapName, ModalName, ModeName } from './typings';
 
 export const SelectedMapState = atom({
   key: 'selectedMap',
@@ -9,4 +9,19 @@ export const SelectedMapState = atom({
 export const SelectedModeState = atom({
   key: 'selectedMode',
   default: ModeName.TIME_LIMIT,
+});
+
+export const ModalState = atom({
+  key: 'modal',
+  default: null as ModalName | null,
+});
+
+export const MutedState = atom({
+  key: 'muted',
+  default: false,
+});
+
+export const GameStatusState = atom({
+  key: 'status',
+  default: null as GameStatusName | null,
 });

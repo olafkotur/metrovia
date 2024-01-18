@@ -1,17 +1,18 @@
 import { debounce } from 'lodash';
 import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Icon, IconButton, RowContainer, SmallText, Spacer, TextInput } from '../components';
+import { Icon, IconButton, RowContainer, SmallText, Spacer, Spinner, TextInput } from '../components';
 import { GAME_TIME_LIMIT, MATCH_DELAY_MS } from '../const';
-import { useMatchStation } from '../hooks';
+import { useFormatRemainingTime, useMatchStation } from '../hooks';
 import { LondonMap } from '../maps/London';
 import { LONDON_LINES } from '../maps/London/lines';
 import { LONDON_STATIONS } from '../maps/London/stations';
-import { SelectedMapState, SelectedModeState } from '../state';
+import { GameStatusState, ModalState, MutedState, SelectedMapState, SelectedModeState } from '../state';
 import { DEFAULT_THEME } from '../style/theme';
-import { IconName, MapName, ModeName, RouteName, Station } from '../typings';
+import { GameStatusName, IconName, MapName, ModalName, ModeName, Station } from '../typings';
+
+const sound = new Audio('ding.mp3');
 
 const GameContainer = styled.div`
   display: flex;
@@ -43,59 +44,90 @@ const TimeText = styled(SmallText)`
   text-align: left;
 `;
 
+const LoaderContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -5px;
+  width: 100vw;
+  height: 100vh;
+  background: ${(props) => props.theme.backgroundColor.primary};
+  z-index: ${(props) => props.theme.zIndex.backdrop};
+`;
+
 export const Game = (): ReactElement => {
   const selectedMap = useRecoilValue(SelectedMapState);
   const selectedMode = useRecoilValue(SelectedModeState);
   const [counter, setCounter] = useState(GAME_TIME_LIMIT);
   const [value, setValue] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
+  const [muted, setMuted] = useRecoilState(MutedState);
+  const setModal = useSetRecoilState(ModalState);
+  const setGameStatus = useSetRecoilState(GameStatusState);
+
   const matchStation = useMatchStation();
+  const formatRemainingTime = useFormatRemainingTime();
 
   const unlockedStations = useMemo(() => {
     return stations.filter((v) => v.visible).length;
   }, [stations]);
 
-  const remainingTime = useMemo(() => {
-    if (selectedMode !== ModeName.TIME_LIMIT) return null;
-
-    const minutes = Math.floor(counter / 60);
-    const seconds = counter % 60;
-    const formattedCounter =
-      new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(minutes) +
-      ':' +
-      new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(seconds);
-
-    return formattedCounter;
-  }, [selectedMode, counter]);
+  const remainingTime = useMemo(() => formatRemainingTime(counter), [counter]);
 
   const debouncedMatchStations = useCallback(
     debounce((input: string) => {
-      const station = matchStation(input);
-      if (station != null) {
-        setStations((stations) => stations.map((s) => (s.id === station.id ? { ...s, visible: true } : s)));
-        return setValue('');
-      }
+      const station = matchStation(input, stations);
+      if (station == null) return;
+
+      muted === false && sound.play();
+      setStations((stations) => stations.map((s) => (s.id === station.id ? { ...s, visible: true } : s)));
+      setValue('');
     }, MATCH_DELAY_MS),
-    [matchStation],
+    [muted, stations, matchStation, setStations, setValue],
   );
 
-  const handleChange = (input: string) => {
-    setValue(input);
-    debouncedMatchStations(input);
-  };
+  const handleChange = useCallback(
+    (input: string) => {
+      setValue(input);
+      debouncedMatchStations(input);
+    },
+    [setValue, debouncedMatchStations],
+  );
 
-  const handleGameEnd = () => {};
+  const handleGameReset = useCallback(() => {
+    setLoading(true);
 
-  useEffect(() => {
+    // reset map logic
     if (selectedMap === MapName.LONDON) {
       setStations(LONDON_STATIONS);
     }
-  }, [selectedMap]);
 
-  useEffect(() => {
-    if (selectedMode !== ModeName.TIME_LIMIT) return;
+    // reset mode logic
+    if (selectedMode === ModeName.TIME_LIMIT) {
+      setCounter(GAME_TIME_LIMIT);
+    }
+
+    setValue('');
+
+    setTimeout(() => setLoading(false), 1000);
+  }, [selectedMap, selectedMode, setStations, setValue]);
+
+  const handleGameExit = useCallback(() => {
+    setGameStatus(GameStatusName.EXIT);
+    setModal(ModalName.GAME_STATUS);
+  }, [setGameStatus, setModal]);
+
+  const handleGameEnd = useCallback(() => {
+    const isSuccess = unlockedStations === stations.length;
+    setGameStatus(isSuccess ? GameStatusName.SUCCESS : GameStatusName.FAILED);
+    setModal(ModalName.GAME_STATUS);
+  }, [unlockedStations, stations, setModal]);
+
+  const handleGameTimer = useCallback(() => {
+    if (selectedMode !== ModeName.TIME_LIMIT) return null;
 
     const timer = setInterval(() => {
       setCounter((counter) => {
@@ -103,17 +135,36 @@ export const Game = (): ReactElement => {
           return counter - 1;
         } else {
           clearInterval(timer);
-          handleGameEnd();
           return 0;
         }
       });
     }, 1000);
 
-    return () => clearInterval(timer); // Clean up the interval on unmount
+    return timer;
+  }, [selectedMode, stations, unlockedStations, setCounter, handleGameEnd]);
+
+  useEffect(() => {
+    if (counter > 0) return;
+
+    handleGameEnd();
+  }, [counter, handleGameEnd]);
+
+  useEffect(() => {
+    handleGameReset();
+    const timer = handleGameTimer();
+
+    return () => {
+      timer && clearInterval(timer);
+    };
   }, []);
 
   return (
     <GameContainer>
+      {loading && (
+        <LoaderContainer>
+          <Spinner size="50px" />
+        </LoaderContainer>
+      )}
       <GameBarContainer>
         <TextInput autoFocus value={value} onChange={handleChange} placeholder="enter a station..." bg="transparent" />
 
@@ -129,11 +180,19 @@ export const Game = (): ReactElement => {
               {remainingTime}
             </TimeText>
           )}
-          <IconButton size={28} onClick={() => window.location.reload()}>
+          <IconButton size={28} onClick={() => setMuted((value) => !value)}>
+            <Icon
+              size={20}
+              name={IconName.VOLUME}
+              color={muted ? DEFAULT_THEME.color.danger : undefined}
+              opacity={muted ? 1 : undefined}
+            />
+          </IconButton>
+          <IconButton size={28} onClick={handleGameReset}>
             <Icon name={IconName.ROTATE} size={20} />
           </IconButton>
-          <IconButton size={28} onClick={() => navigate(RouteName.SETUP)}>
-            <Icon name={IconName.CLOSE} size={22} />
+          <IconButton size={28} onClick={handleGameExit}>
+            <Icon size={22} name={IconName.CLOSE} />
           </IconButton>
         </RowContainer>
       </GameBarContainer>
