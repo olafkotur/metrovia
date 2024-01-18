@@ -90,7 +90,6 @@ export const LONDON_LINES: Line[] = [
     color: '#A66527',
     visible: true,
   },
-  // TODO: this is a duplication
   {
     id: LondonLineId.WATERLOO,
     name: 'Waterloo',
@@ -124,13 +123,6 @@ export const LONDON_LINES: Line[] = [
     name: 'Tram',
     stop: 'tram-tram',
     color: '#8AC056',
-    visible: true,
-  },
-  {
-    id: LondonLineId.WATERLOO,
-    name: 'Waterloo and City',
-    stop: 'waterloo-city',
-    color: '#96CCBD',
     visible: true,
   },
   {
