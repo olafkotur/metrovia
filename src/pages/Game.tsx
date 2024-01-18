@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
-import React, { ReactElement, useEffect, useMemo, useState } from 'react';
+import { debounce } from 'lodash';
+import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { Icon, IconButton, RowContainer, SmallText, Spacer, TextInput } from '../components';
+import { MATCH_DELAY_MS } from '../const';
 import { useMatchStation } from '../hooks';
 import { LondonMap } from '../maps/London';
 import { LONDON_LINES } from '../maps/London/lines';
@@ -55,19 +57,20 @@ export const Game = (): ReactElement => {
     return stations.filter((v) => v.visible).length;
   }, [stations]);
 
-  const handleChange = (input: string) => {
-    const station = matchStation(input);
-    if (station != null) {
-      setValue('');
-      setStations((stations) => {
-        const index = stations.findIndex((s) => s.id === station.id);
-        const updatedStations = [...stations];
-        updatedStations[index].visible = true;
-        return updatedStations;
-      });
-    }
+  const debouncedMatchStations = useCallback(
+    debounce((input: string) => {
+      const station = matchStation(input);
+      if (station != null) {
+        setStations((stations) => stations.map((s) => (s.id === station.id ? { ...s, visible: true } : s)));
+        return setValue('');
+      }
+    }, MATCH_DELAY_MS),
+    [matchStation],
+  );
 
+  const handleChange = (input: string) => {
     setValue(input);
+    debouncedMatchStations(input);
   };
 
   useEffect(() => {
@@ -96,7 +99,9 @@ export const Game = (): ReactElement => {
         <Spacer horizontal={5} />
 
         <RowContainer>
-          <PointsText faint>{unlockedStations} stations</PointsText>
+          <PointsText faint>
+            {unlockedStations} / {stations.length}
+          </PointsText>
           <Spacer horizontal={5} />
           {selectedMode === ModeName.TIME_LIMIT && <TimeText faint>{dayjs.unix(counter).format('mm:ss')}</TimeText>}
           <IconButton size={28} onClick={() => window.location.reload()}>

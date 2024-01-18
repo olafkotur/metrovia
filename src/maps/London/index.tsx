@@ -52,6 +52,7 @@ export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Statio
       enableBackground="new 0 0 1247.244 907.087"
       xmlSpace="preserve"
       cursor="grab"
+      style={{ width: '100%', height: '100%' }}
     >
       <g id="river">
         <g id="river_1_">

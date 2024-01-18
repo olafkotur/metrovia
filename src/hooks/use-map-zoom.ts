@@ -64,6 +64,7 @@ export const useMapZoom = ({ ref, initialViewbox }: { ref: any; initialViewbox: 
     ref.current.addEventListener('mouseleave', endDrag);
 
     return () => {
+      if (ref.current == null) return;
       ref.current.removeEventListener('wheel', zoom);
       ref.current.removeEventListener('mousedown', startDrag);
       ref.current.removeEventListener('mousemove', drag);
