@@ -1,22 +1,23 @@
 import React, { ReactElement, useEffect, useRef } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useMapZoom } from '../../hooks';
-import { Line, Station } from '../../typings';
+import { LinesState, StationsState } from '../../state';
 
 const initialViewbox = { x: 64.094, y: 122.25, width: 985.889, height: 657.072 };
 
-export const LondonMap = ({ lines, stations }: { lines: Line[]; stations: Station[] }): ReactElement => {
+export const LondonMap = (): ReactElement => {
   const ref = useRef(null);
+  const lines = useRecoilValue(LinesState);
+  const stations = useRecoilValue(StationsState);
 
   const removeLines = () => {
     for (const line of lines) {
-      if (line.visible === true) continue;
-
       const lineElements = document.querySelectorAll(`[id=${line.id}]`) as any;
       const lineStopElements = document.querySelectorAll(`[data-linestop=${line.stop}]`) as any;
       const elements = [...lineElements, ...lineStopElements];
 
       elements.forEach((element: any) => {
-        element.style.visibility = 'hidden';
+        element.style.visibility = line.visible ? 'visible' : 'hidden';
       });
     }
   };

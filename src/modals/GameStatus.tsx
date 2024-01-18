@@ -4,7 +4,7 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { LargeButton, LargeText, MediumText, SpaceBetweenContainer, Spacer } from '../components';
 import { useStartGame } from '../hooks';
-import { GameStatusState, ModalState } from '../state';
+import { GameStatusState, ModalState, PanelState } from '../state';
 import { DEFAULT_THEME } from '../style/theme';
 import { GameStatusName, RouteName } from '../typings';
 
@@ -35,6 +35,7 @@ export const GameStatus = (): ReactElement => {
 
 const SuccessContent = (): ReactElement => {
   const resetModal = useResetRecoilState(ModalState);
+  const resetPanel = useResetRecoilState(PanelState);
   const navigate = useNavigate();
 
   return (
@@ -51,6 +52,7 @@ const SuccessContent = (): ReactElement => {
         onClick={() => {
           navigate(RouteName.SETUP);
           resetModal();
+          resetPanel();
         }}
       >
         Continue
@@ -61,6 +63,7 @@ const SuccessContent = (): ReactElement => {
 
 const FailedContent = (): ReactElement => {
   const resetModal = useResetRecoilState(ModalState);
+  const resetPanel = useResetRecoilState(PanelState);
   const navigate = useNavigate();
 
   return (
@@ -77,6 +80,7 @@ const FailedContent = (): ReactElement => {
         onClick={() => {
           navigate(RouteName.SETUP);
           resetModal();
+          resetPanel();
         }}
       >
         Continue
@@ -87,6 +91,7 @@ const FailedContent = (): ReactElement => {
 
 const ResetContent = (): ReactElement => {
   const resetModal = useResetRecoilState(ModalState);
+  const resetPanel = useResetRecoilState(PanelState);
   const startGame = useStartGame();
 
   return (
@@ -104,6 +109,7 @@ const ResetContent = (): ReactElement => {
           onClick={() => {
             startGame();
             resetModal();
+            resetPanel();
           }}
         >
           Yes
@@ -116,6 +122,7 @@ const ResetContent = (): ReactElement => {
 
 const ExitContent = (): ReactElement => {
   const resetModal = useResetRecoilState(ModalState);
+  const resetPanel = useResetRecoilState(PanelState);
   const navigate = useNavigate();
 
   return (
@@ -133,6 +140,7 @@ const ExitContent = (): ReactElement => {
           onClick={() => {
             navigate(RouteName.SETUP);
             resetModal();
+            resetPanel();
           }}
         >
           Yes

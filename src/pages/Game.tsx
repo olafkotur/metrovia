@@ -6,7 +6,6 @@ import { Icon, IconButton, RowContainer, SmallText, Spacer, TextInput } from '..
 import { MATCH_DELAY_MS } from '../const';
 import { useFormatRemainingTime, useMatchStation } from '../hooks';
 import { LondonMap } from '../maps/London';
-import { LONDON_LINES } from '../maps/London/lines';
 import {
   GameStatusState,
   ModalState,
@@ -128,7 +127,7 @@ export const Game = (): ReactElement => {
   }, [selectedMode, stations, unlockedStations, setSecondsRemaining, handleGameEnd]);
 
   useEffect(() => {
-    if (secondsRemaining > 0) return;
+    if (selectedMode !== ModeName.TIME_LIMIT || secondsRemaining > 0) return;
     handleGameEnd();
   }, [secondsRemaining, handleGameEnd]);
 
@@ -162,8 +161,8 @@ export const Game = (): ReactElement => {
 
           <IconButton
             size={28}
-            bg={panel === PanelName.CHOOSE_LINES ? DEFAULT_THEME.backgroundColor.selected : undefined}
-            onClick={() => setPanel(panel === PanelName.CHOOSE_LINES ? null : PanelName.CHOOSE_LINES)}
+            bg={panel === PanelName.LINES ? DEFAULT_THEME.backgroundColor.selected : undefined}
+            onClick={() => setPanel(panel === PanelName.LINES ? null : PanelName.LINES)}
           >
             <Icon name={IconName.TRAIN} size={20} />
           </IconButton>
@@ -198,7 +197,7 @@ export const Game = (): ReactElement => {
           </IconButton>
         </RowContainer>
       </GameBarContainer>
-      <LondonMap lines={LONDON_LINES} stations={stations} />
+      <LondonMap />
     </GameContainer>
   );
 };

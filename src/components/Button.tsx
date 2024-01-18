@@ -11,7 +11,6 @@ interface ButtonProps extends HTMLMotionProps<'div'> {
 }
 
 const ButtonContainer = styled(motion.div)<{ disabled?: boolean }>`
-  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
   filter: drop-shadow(${(props) => props.theme.dropShadow.medium});
   cursor: pointer;

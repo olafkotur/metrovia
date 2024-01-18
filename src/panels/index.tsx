@@ -5,7 +5,7 @@ import { Icon, IconButton, Spacer } from '../components';
 import { useOnKeyPress } from '../hooks';
 import { ModalState, PanelState } from '../state';
 import { IconName, PanelName } from '../typings';
-import { ChooseLines } from './ChooseLines';
+import { Lines } from './Lines';
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -53,7 +53,7 @@ export const Panels = (): ReactElement => {
   const resetPanel = useResetRecoilState(PanelState);
 
   const disableBackdrop = useMemo(() => {
-    if (panel === PanelName.CHOOSE_LINES) {
+    if (panel === PanelName.LINES) {
       return true;
     }
 
@@ -82,7 +82,7 @@ export const Panels = (): ReactElement => {
             </CloseButton>
           </PanelHeader>
           <Spacer vertical={5} />
-          {panel === PanelName.CHOOSE_LINES && <ChooseLines />}
+          {panel === PanelName.LINES && <Lines />}
         </PanelContent>
       </PanelContainer>
     </>

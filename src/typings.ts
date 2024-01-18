@@ -32,7 +32,7 @@ export enum ModalName {
 }
 
 export enum PanelName {
-  CHOOSE_LINES = 'choose-lines',
+  LINES = 'lines',
 }
 
 export enum MapName {
@@ -44,7 +44,7 @@ export enum MapName {
 export enum ModeName {
   TIME_LIMIT = 'Time limit',
   UNLIMITED = 'Unlimited',
-  SINGLE_LINE = 'Single line',
+  CUSTOM_LINES = 'Custom lines',
 }
 
 export enum GameStatusName {
@@ -58,6 +58,7 @@ export interface Line {
   id: string;
   name: string;
   stop: string;
+  color: string;
   visible: boolean;
 }
 

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon, IconButton } from '../components';
 import { LondonMap } from '../maps/London';
-import { LONDON_LINES } from '../maps/London/lines';
 import { DEFAULT_THEME } from '../style/theme';
 import { IconName, RouteName } from '../typings';
 
@@ -29,7 +28,7 @@ export const Preview = (): ReactElement => {
       <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)} bg={DEFAULT_THEME.backgroundColor.primary}>
         <Icon name={IconName.CLOSE} size={22} />
       </CloseButton>
-      <LondonMap lines={LONDON_LINES} stations={[]} />
+      <LondonMap />
     </PreviewContainer>
   );
 };

@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
     user-select: none;
 
     margin: 0;
+    overflow: hidden;
     font-family: ${(props) => props.theme.font};
     font-size: ${(props) => props.theme.fontSize.medium};
     color: ${(props) => props.theme.color.normal};
