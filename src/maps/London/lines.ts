@@ -24,14 +24,14 @@ export const LONDON_LINES: Line[] = [
     id: LondonLineId.HAMMERSMITH_AND_CITY,
     name: 'Hammersmith and City',
     stop: 'hammersmith-city',
-    color: '#E58CA1',
+    color: '#D47A91',
     visible: true,
   },
   {
     id: LondonLineId.CIRCLE,
     name: 'Circle',
     stop: 'circle',
-    color: '#F8D448',
+    color: '#D6B536',
     visible: true,
   },
   {
@@ -93,8 +93,8 @@ export const LONDON_LINES: Line[] = [
   {
     id: LondonLineId.WATERLOO,
     name: 'Waterloo',
-    stop: 'waterloo',
-    color: '#96CCBD',
+    stop: 'waterloo-city',
+    color: '#86B8A7',
     visible: true,
   },
   {
@@ -122,7 +122,7 @@ export const LONDON_LINES: Line[] = [
     id: LondonLineId.TRAM,
     name: 'Tram',
     stop: 'tram-tram',
-    color: '#8AC056',
+    color: '#7AAE4C',
     visible: true,
   },
   {

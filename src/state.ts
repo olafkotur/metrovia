@@ -43,5 +43,5 @@ export const StationsState = atom({
 
 export const SecondsRemainingState = atom({
   key: 'secondsRemaining',
-  default: 0,
+  default: null as number | null,
 });

@@ -86,13 +86,11 @@ export const Game = (): ReactElement => {
     });
   }, [lines, stations]);
 
-  console.log({ lineStations });
-
   const unlockedStations = useMemo(() => {
     return lineStations.filter((v) => v.visible).length;
   }, [lineStations]);
 
-  const remainingTime = useMemo(() => formatRemainingTime(secondsRemaining), [secondsRemaining]);
+  const remainingTime = useMemo(() => formatRemainingTime(secondsRemaining ?? 0), [secondsRemaining]);
 
   const debouncedMatchStations = useCallback(
     debounce((input: string) => {
@@ -121,12 +119,13 @@ export const Game = (): ReactElement => {
   }, [unlockedStations, lineStations, setModal]);
 
   const handleGameTimer = useCallback(() => {
+    if (secondsRemaining == null) return;
     if (selectedMode !== ModeName.TIME_LIMIT) return null;
 
     const timer = setInterval(() => {
       setSecondsRemaining((seconds) => {
-        if (seconds > 0) {
-          return seconds - 1;
+        if ((seconds ?? 0) > 0) {
+          return (seconds ?? 0) - 1;
         } else {
           clearInterval(timer);
           return 0;
@@ -138,6 +137,7 @@ export const Game = (): ReactElement => {
   }, [selectedMode, , setSecondsRemaining, handleGameEnd]);
 
   useEffect(() => {
+    if (secondsRemaining == null) return;
     if (selectedMode !== ModeName.TIME_LIMIT || secondsRemaining > 0) return;
     handleGameEnd();
   }, [secondsRemaining, handleGameEnd]);
