@@ -1,5 +1,12 @@
 import { useEffect } from 'react';
-import { MAX_MAP_ZOOM, MIN_MAP_ZOOM } from '../const';
+import {
+  MAX_DRAG_DISTANCE_X,
+  MAX_DRAG_DISTANCE_Y,
+  MAX_MAP_ZOOM,
+  MIN_DRAG_DISTANCE_X,
+  MIN_DRAG_DISTANCE_Y,
+  MIN_MAP_ZOOM,
+} from '../const';
 import { ViewBox } from '../typings';
 
 export const useMapZoom = ({ ref, initialViewbox }: { ref: any; initialViewbox: ViewBox }) => {
@@ -45,8 +52,16 @@ export const useMapZoom = ({ ref, initialViewbox }: { ref: any; initialViewbox: 
 
       event.preventDefault();
 
-      viewBox.x -= ((event.clientX - dragStart.x) / ref.current.clientWidth) * viewBox.width;
-      viewBox.y -= ((event.clientY - dragStart.y) / ref.current.clientHeight) * viewBox.height;
+      const newViewBoxX = viewBox.x - ((event.clientX - dragStart.x) / ref.current.clientWidth) * viewBox.width;
+      const newViewBoxY = viewBox.y - ((event.clientY - dragStart.y) / ref.current.clientHeight) * viewBox.height;
+      console.log({ newViewBoxX, newViewBoxY });
+
+      // viewBox.x = newViewBoxX;
+      // viewBox.y = newViewBoxY;
+
+      // Check if the new viewBox.x and viewBox.y are within the allowed drag distance
+      viewBox.x = Math.min(Math.max(newViewBoxX, MIN_DRAG_DISTANCE_X), MAX_DRAG_DISTANCE_X);
+      viewBox.y = Math.min(Math.max(newViewBoxY, MIN_DRAG_DISTANCE_Y), MAX_DRAG_DISTANCE_Y);
 
       ref.current.setAttribute('viewBox', `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`);
 
