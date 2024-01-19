@@ -453,8 +453,8 @@ export const LONDON_STATIONS: Station[] = [
     lines: [LondonLineId.METROPOLITAN, LondonLineId.CIRCLE, LondonLineId.HAMMERSMITH_AND_CITY, LondonLineId.NORTHERN],
   },
   {
-    id: 'station-kings-cross-andst-pancras-international',
-    name: 'King’s Cross andSt Pancras International',
+    id: 'station-kings-cross-and-st-pancras-international',
+    name: 'King’s Cross and St Pancras International',
     visible: false,
     lines: [
       LondonLineId.METROPOLITAN,
@@ -1258,14 +1258,14 @@ export const LONDON_STATIONS: Station[] = [
     lines: [LondonLineId.DISTRICT, LondonLineId.OVERGROUND],
   },
   {
-    id: 'station-ifs-cloud-royal-docks',
-    name: 'IFS Cloud Royal Docks',
+    id: 'station-royal-docks',
+    name: 'Royal Docks',
     visible: false,
     lines: [LondonLineId.EMIRATES_AIR_LINE],
   },
   {
-    id: 'station-ifs-cloud-greenwich-peninsula',
-    name: 'IFS Cloud Greenwich Peninsula',
+    id: 'station-greenwich-peninsula',
+    name: 'Greenwich Peninsula',
     visible: false,
     lines: [LondonLineId.EMIRATES_AIR_LINE],
   },
@@ -1324,7 +1324,7 @@ export const LONDON_STATIONS: Station[] = [
     lines: [LondonLineId.NORTHERN],
   },
   {
-    id: 'station-totteridge-andwhetstone',
+    id: 'station-totteridge-and-whetstone',
     name: 'Totteridge and Whetstone',
     visible: false,
     lines: [LondonLineId.NORTHERN],
@@ -2008,8 +2008,8 @@ export const LONDON_STATIONS: Station[] = [
     lines: [LondonLineId.ELIZABETH],
   },
   {
-    id: 'station-cutty-sark-for-maritime-greenwich',
-    name: 'Cutty Sark for Maritime Greenwich',
+    id: 'station-cutty-sark',
+    name: 'Cutty Sark',
     visible: false,
     lines: [LondonLineId.DLR],
   },
@@ -2668,8 +2668,8 @@ export const LONDON_STATIONS: Station[] = [
     lines: [LondonLineId.BAKERLOO],
   },
   {
-    id: 'station-custom-house-for-excel',
-    name: 'Custom House for ExCeL',
+    id: 'station-custom-house',
+    name: 'Custom House',
     visible: false,
     lines: [LondonLineId.DLR, LondonLineId.ELIZABETH],
   },

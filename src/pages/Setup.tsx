@@ -33,7 +33,7 @@ export const Setup = (): ReactElement => {
   return (
     <>
       <SetupContainer>
-        <VeryLargeText>Metrofinder</VeryLargeText>
+        <VeryLargeText>MetroVia</VeryLargeText>
 
         <Spacer vertical={30} />
 

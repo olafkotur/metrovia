@@ -9517,9 +9517,9 @@ export const LondonMap = (): ReactElement => {
             </text>
           </g>
         </g>
-        <g id="station-kings-cross-andst-pancras-international">
+        <g id="station-kings-cross-and-st-pancras-international">
           <text
-            id="station-kings-cross-andst-pancras-international"
+            id="station-kings-cross-and-st-pancras-international"
             transform="matrix(1 0 0 1 598.285 359.6533)"
             fontSize={4}
           >
@@ -9527,7 +9527,7 @@ export const LondonMap = (): ReactElement => {
               King’s Cross
             </tspan>
             <tspan x="0" y="4.5" fill="#1C3F94" className="blue-fill">
-              andSt Pancras{' '}
+              and St Pancras
             </tspan>
             <tspan x="0" y="9.1" fill="#1C3F94" className="blue-fill">
               International
@@ -9612,26 +9612,10 @@ export const LondonMap = (): ReactElement => {
         </text>
         <text id="station-st-james-park" transform="matrix(1 0 0 1 478.5209 519.7138)" fontSize={4}>
           <tspan x="0" y="0" fill="#1C3F94" className="blue-fill">
-            S
+            St
           </tspan>
-          <tspan x="2.5" y="0" fill="#1C3F94" className="blue-fill">
-            t
-          </tspan>
-          <tspan x="4.5" y="0" fill="#1C3F94" className="blue-fill" />
           <tspan x="5.4" y="0" fill="#1C3F94" className="blue-fill">
-            Jam
-          </tspan>
-          <tspan x="14.5" y="0" fill="#1C3F94" className="blue-fill">
-            e
-          </tspan>
-          <tspan x="17.1" y="0" fill="#1C3F94" className="blue-fill">
-            s
-          </tspan>
-          <tspan x="19.3" y="0" fill="#1C3F94" className="blue-fill">
-            ’
-          </tspan>
-          <tspan x="20.2" y="0" fill="#1C3F94" className="blue-fill">
-            s
+            James's
           </tspan>
           <tspan x="6.4" y="4.5" fill="#1C3F94" className="blue-fill">
             Park
@@ -10841,28 +10825,22 @@ export const LondonMap = (): ReactElement => {
             Richmond
           </text>
         </g>
-        <g id="station-ifs-cloud-royal-docks">
-          <text id="station-ifs-cloud-royal-docks" transform="matrix(1 0 0 1 898.1535 482.3464)" fontSize={4}>
+        <g id="station-royal-docks">
+          <text id="station-royal-docks" transform="matrix(1 0 0 1 898.1535 482.3464)" fontSize={4}>
             <tspan x="0" y="0" fill="#1C3F94" className="blue-fill">
-              IFS Cloud{' '}
-            </tspan>
-            <tspan x="0" y="4.4" fill="#1C3F94" className="blue-fill">
               Royal
             </tspan>
-            <tspan x="0" y="8.8" fill="#1C3F94" className="blue-fill">
+            <tspan x="0" y="4.4" fill="#1C3F94" className="blue-fill">
               Docks
             </tspan>
           </text>
         </g>
         <g id="940GZZALGWP_label_00000134211356112220503130000001865599549424627368_">
-          <text id="station-ifs-cloud-greenwich-peninsula" transform="matrix(1 0 0 1 844.9306 518.9301)" fontSize={4}>
+          <text id="station-greenwich-peninsula" transform="matrix(1 0 0 1 844.9306 518.9301)" fontSize={4}>
             <tspan x="0" y="0" fill="#1C3F94" className="blue-fill">
-              IFS Cloud{' '}
-            </tspan>
-            <tspan x="0" y="4.4" fill="#1C3F94" className="blue-fill">
               Greenwich
             </tspan>
-            <tspan x="0" y="8.8" fill="#1C3F94" className="blue-fill">
+            <tspan x="0" y="4.4" fill="#1C3F94" className="blue-fill">
               Peninsula
             </tspan>
           </text>
@@ -10966,13 +10944,13 @@ export const LondonMap = (): ReactElement => {
           High Barnet
         </text>
         <text
-          id="station-totteridge-andwhetstone"
+          id="station-totteridge-and-whetstone"
           transform="matrix(1 0 0 1 588.874 181.0464)"
           fill="#1C3F94"
           className="blue-fill"
           fontSize={4}
         >
-          Totteridge andWhetstone
+          Totteridge and Whetstone
         </text>
         <text
           id="station-woodside-park"
@@ -12096,17 +12074,10 @@ export const LondonMap = (): ReactElement => {
             </text>
           </g>
         </g>
-        <g id="station-cutty-sark-for-maritime-greenwich">
-          <text
-            id="station-cutty-sark-for-maritime-greenwich"
-            transform="matrix(1 0 0 1 800.166 590.4805)"
-            fontSize={4}
-          >
+        <g id="station-cutty-sark">
+          <text id="station-cutty-sark" transform="matrix(1 0 0 1 800.166 590.4805)" fontSize={4}>
             <tspan x="0" y="0" fill="#1C3F94" className="blue-fill">
-              Cutty Sark for{' '}
-            </tspan>
-            <tspan x="0" y="4.5" fill="#1C3F94" className="blue-fill">
-              Maritime Greenwich
+              Cutty Sark
             </tspan>
           </text>
         </g>
@@ -12158,10 +12129,7 @@ export const LondonMap = (): ReactElement => {
           <g id="station-tower-hill">
             <text transform="matrix(1 0 0 1 664.4221 475.4186)" fontSize={4}>
               <tspan x="0" y="0" fill="#1C3F94" className="blue-fill">
-                Tower
-              </tspan>
-              <tspan x="6.4" y="4.5" fill="#1C3F94" className="blue-fill">
-                Hill
+                Tower Hill
               </tspan>
             </text>
           </g>
@@ -12291,7 +12259,7 @@ export const LondonMap = (): ReactElement => {
               Finchley Road
             </tspan>
             <tspan x="0" y="4.5" fill="#1C3F94" className="blue-fill">
-              andFrognal
+              and Frognal
             </tspan>
           </text>
         </g>
@@ -13250,13 +13218,10 @@ export const LondonMap = (): ReactElement => {
             Lambeth North
           </text>
         </g>
-        <g id="station-custom-house-for-excel">
-          <text id="station-custom-house-for-excel" transform="matrix(1 0 0 1 940.2543 479.2393)" fontSize={4}>
+        <g id="station-custom-house">
+          <text id="station-custom-house" transform="matrix(1 0 0 1 940.2543 479.2393)" fontSize={4}>
             <tspan x="0" y="0" fill="#1C3F94" className="blue-fill">
-              Custom House{' '}
-            </tspan>
-            <tspan x="0" y="4.5" fill="#1C3F94" className="blue-fill">
-              for ExCeL
+              Custom House
             </tspan>
           </text>
         </g>

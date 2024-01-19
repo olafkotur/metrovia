@@ -96,10 +96,10 @@ export const Game = (): ReactElement => {
     debounce((input: string) => {
       const station = matchStation(input, lineStations);
       if (station == null) return;
+      setValue('');
 
       muted === false && sound.play();
       setStations((stations) => stations.map((s) => (s.id === station.id ? { ...s, visible: true } : s)));
-      setValue('');
     }, MATCH_DELAY_MS),
     [muted, lineStations, matchStation, setStations, setValue],
   );

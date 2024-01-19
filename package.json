@@ -1,11 +1,11 @@
 {
-  "name": "metrofinder",
+  "name": "metrovia",
   "version": "0.0.0",
-  "description": "Metrofinder - Built with React and TypeScript",
+  "description": "MetroVia - Built with React and TypeScript",
   "keywords": [],
   "author": "Olaf Kotur <olafkotur97@gmail.com>",
   "license": "MIT",
-  "repository": "git@github.com:olafkotur/metrofinder.git",
+  "repository": "git@github.com:olafkotur/metrovia.git",
   "scripts": {
     "build": "react-scripts build",
     "start": "BROWSER=none react-scripts start",
