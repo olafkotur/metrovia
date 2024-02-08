@@ -10,6 +10,10 @@ import { GameStatusName, RouteName } from '../typings';
 
 const Container = styled.div`
   width: 400px;
+
+  @media (max-width: ${Theme.breakpoints.mobile}px) {
+    width: 80vw;
+  }
 `;
 
 const SingleButton = styled(LargeButton)`
@@ -114,6 +118,7 @@ const ResetContent = (): ReactElement => {
         >
           Yes
         </DualButton>
+        <Spacer horizontal={5} />
         <DualButton onClick={resetModal}>No</DualButton>
       </SpaceBetweenContainer>
     </>
@@ -145,6 +150,7 @@ const ExitContent = (): ReactElement => {
         >
           Yes
         </DualButton>
+        <Spacer horizontal={5} />
         <DualButton onClick={resetModal}>No</DualButton>
       </SpaceBetweenContainer>
     </>
