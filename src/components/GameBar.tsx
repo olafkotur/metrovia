@@ -1,6 +1,15 @@
 import { debounce } from 'lodash';
 import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
-import { Icon, IconButton, IconName, RowContainer, SmallText, Spacer, TextInput } from 'react-otio';
+import {
+  Icon,
+  IconButton,
+  IconName,
+  RowContainer,
+  SmallText,
+  SpaceBetweenContainer,
+  Spacer,
+  TextInput,
+} from 'react-otio';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { MATCH_DELAY_MS } from '../const';
@@ -28,15 +37,38 @@ const GameBarContainer = styled.div`
   position: absolute;
   width: 50%;
   min-width: 600px;
-  padding: ${(props) => props.theme.spacing.small};
-  bottom: ${(props) => props.theme.spacing.medium};
+  padding: ${(props) => props.theme.spacing.medium};
+  bottom: ${(props) => props.theme.spacing.large};
   border-radius: ${(props) => props.theme.borderRadius.medium};
   background: ${(props) => props.theme.backgroundColor.secondary};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    flex-direction: column;
+    align-items: center;
+    width: calc(100% - 30px);
+    min-width: 0;
+  }
+`;
+
+const ActionsContainer = styled(RowContainer)`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: ${(props) => props.theme.spacing.small};
+  justify-items: center;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    width: 100%;
+  }
 `;
 
 const PointsText = styled(SmallText)`
   width: 100px;
   text-align: right;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    width: auto;
+    justify-content: space-between;
+  }
 `;
 
 const TimeText = styled(SmallText)`
@@ -132,11 +164,8 @@ export const GameBar = (): ReactElement => {
 
   return (
     <GameBarContainer>
-      <TextInput autoFocus value={value} onChange={handleChange} placeholder="enter a station..." bg="transparent" />
-
-      <Spacer horizontal={5} />
-
-      <RowContainer>
+      <SpaceBetweenContainer>
+        <TextInput autoFocus value={value} onChange={handleChange} placeholder="enter a station..." bg="transparent" />
         <PointsText faint>
           {unlockedStations}/{lineStations.length}
         </PointsText>
@@ -148,7 +177,11 @@ export const GameBar = (): ReactElement => {
             {remainingTime}
           </TimeText>
         )}
+      </SpaceBetweenContainer>
 
+      <Spacer horizontal={5} />
+
+      <ActionsContainer>
         <IconButton size={28} onClick={console.log}>
           <Icon name={IconName.LOCATION_PIN} size={20} />
         </IconButton>
@@ -160,7 +193,6 @@ export const GameBar = (): ReactElement => {
         >
           <Icon name={IconName.TRAIN} size={20} />
         </IconButton>
-        <Spacer horizontal={1} />
         <IconButton size={28} onClick={() => setMuted((value) => !value)}>
           <Icon
             size={20}
@@ -169,7 +201,6 @@ export const GameBar = (): ReactElement => {
             opacity={muted ? 1 : undefined}
           />
         </IconButton>
-        <Spacer horizontal={1} />
         <IconButton
           size={28}
           onClick={() => {
@@ -179,7 +210,6 @@ export const GameBar = (): ReactElement => {
         >
           <Icon name={IconName.ROTATE} size={20} />
         </IconButton>
-        <Spacer horizontal={1} />
         <IconButton
           size={28}
           onClick={() => {
@@ -189,7 +219,7 @@ export const GameBar = (): ReactElement => {
         >
           <Icon size={22} name={IconName.XMARK} />
         </IconButton>
-      </RowContainer>
+      </ActionsContainer>
     </GameBarContainer>
   );
 };

@@ -25,7 +25,7 @@ export const Preview = (): ReactElement => {
 
   return (
     <PreviewContainer>
-      <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)} bg={Theme.backgroundColor.primary}>
+      <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)} bg={Theme.backgroundColor.secondary}>
         <Icon name={IconName.XMARK} size={22} />
       </CloseButton>
       <LondonMap />
