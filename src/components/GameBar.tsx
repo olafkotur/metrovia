@@ -52,7 +52,7 @@ const GameBarContainer = styled.div`
 
 const ActionsContainer = styled(RowContainer)`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: ${(props) => props.theme.spacing.small};
   justify-items: center;
 
@@ -165,7 +165,7 @@ export const GameBar = (): ReactElement => {
   return (
     <GameBarContainer>
       <SpaceBetweenContainer>
-        <TextInput autoFocus value={value} onChange={handleChange} placeholder="enter a station..." bg="transparent" />
+        <TextInput autoFocus placeholder="enter a station..." bg="transparent" value={value} onChange={handleChange} />
         <PointsText faint>
           {unlockedStations}/{lineStations.length}
         </PointsText>
@@ -182,18 +182,15 @@ export const GameBar = (): ReactElement => {
       <Spacer horizontal={5} />
 
       <ActionsContainer>
-        <IconButton size={28} onClick={console.log}>
-          <Icon name={IconName.LOCATION_PIN} size={20} />
-        </IconButton>
-
         <IconButton
+          tooltip="Toggle lines panel"
           size={28}
           bg={panel === PanelName.LINES ? Theme.backgroundColor.selected : undefined}
           onClick={() => setPanel(panel === PanelName.LINES ? null : PanelName.LINES)}
         >
           <Icon name={IconName.TRAIN} size={20} />
         </IconButton>
-        <IconButton size={28} onClick={() => setMuted((value) => !value)}>
+        <IconButton tooltip="Toggle game sounds" size={28} onClick={() => setMuted((value) => !value)}>
           <Icon
             size={20}
             name={IconName.VOLUME_LOW}
@@ -202,6 +199,7 @@ export const GameBar = (): ReactElement => {
           />
         </IconButton>
         <IconButton
+          tooltip="Reset game"
           size={28}
           onClick={() => {
             setGameStatus(GameStatusName.RESET);
@@ -211,6 +209,7 @@ export const GameBar = (): ReactElement => {
           <Icon name={IconName.ROTATE} size={20} />
         </IconButton>
         <IconButton
+          tooltip="Exit game"
           size={28}
           onClick={() => {
             setGameStatus(GameStatusName.EXIT);

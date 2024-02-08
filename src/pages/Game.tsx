@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { GameBar } from '../components/GameBar';
 import { useFormatRemainingTime } from '../hooks/use-format-remaining-time';
+import { usePreventTouch } from '../hooks/use-prevent-touch';
 import { LondonMap } from '../maps/London';
 import { SecondsRemainingState, SelectedMapState } from '../state';
 
@@ -21,6 +22,7 @@ export const Game = (): ReactElement => {
 
   const formatRemainingTime = useFormatRemainingTime();
 
+  usePreventTouch();
   useUpdateTitle({
     placeholder: 'MetroVia',
     value: `${selectedMap} - ${formatRemainingTime(secondsRemaining ?? 0)}`,
@@ -28,8 +30,8 @@ export const Game = (): ReactElement => {
 
   return (
     <GameContainer>
+      <LondonMap showControls />
       <GameBar />
-      <LondonMap />
     </GameContainer>
   );
 };

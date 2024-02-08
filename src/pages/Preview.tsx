@@ -17,7 +17,7 @@ const PreviewContainer = styled.div`
 const CloseButton = styled(IconButton)`
   position: absolute;
   top: ${(props) => props.theme.spacing.small};
-  right: ${(props) => props.theme.spacing.small};
+  left: ${(props) => props.theme.spacing.small};
 `;
 
 export const Preview = (): ReactElement => {
@@ -25,10 +25,10 @@ export const Preview = (): ReactElement => {
 
   return (
     <PreviewContainer>
-      <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)} bg={Theme.backgroundColor.secondary}>
+      <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)} bg={Theme.color.danger}>
         <Icon name={IconName.XMARK} size={22} />
       </CloseButton>
-      <LondonMap />
+      <LondonMap showControls />
     </PreviewContainer>
   );
 };

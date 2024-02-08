@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import ReactDOM from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
@@ -14,19 +13,14 @@ import { Setup } from './pages/Setup';
 import { Panels } from './panels';
 import { RouteName } from './typings';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      refetchOnWindowFocus: true,
-    },
-  },
-});
-
 const AppContainer = styled.div`
   display: flex;
   height: 100vh;
   position: relative;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    height: calc(100vh - 80px);
+  }
 `;
 
 const PageContainer = styled.div`
@@ -63,13 +57,11 @@ const AppInternal = (): ReactElement => {
 
 const App = (): ReactElement => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <ThemeProvider>
-          <AppInternal />
-        </ThemeProvider>
-      </RecoilRoot>
-    </QueryClientProvider>
+    <RecoilRoot>
+      <ThemeProvider>
+        <AppInternal />
+      </ThemeProvider>
+    </RecoilRoot>
   );
 };
 
