@@ -7,19 +7,6 @@ export enum Environment {
   PRODUCTION = 'production',
 }
 
-export enum IconName {
-  CLOSE = 'fa-solid fa-xmark',
-  ROTATE = 'fa-solid fa-rotate-right',
-  VOLUME = 'fa-solid fa-volume-low',
-  VOLUME_MUTE = 'fa-solid fa-volume-off',
-  TRAIN = 'fa-solid fa-train-subway',
-  CIRCLE_CHECK = 'fa-solid fa-circle-check',
-  CHEVRON_UP = 'fa-solid fa-chevron-up',
-  CHEVRON_RIGHT = 'fa-solid fa-chevron-right',
-  CHEVRON_DOWN = 'fa-solid fa-chevron-down',
-  CHEVRON_LEFT = 'fa-solid fa-chevron-left',
-}
-
 export enum RouteName {
   SETUP = '/',
   GAME = '/game',

@@ -1,7 +1,4 @@
-export type Themes = 'default';
-
-export const DEFAULT_THEME = {
-  name: 'default' as Themes,
+export const Theme = {
   font: 'Inter',
   fontSize: {
     verySmall: '12px',
@@ -70,7 +67,7 @@ export const DEFAULT_THEME = {
   },
 };
 
-export type Theme = typeof DEFAULT_THEME;
+type Theme = typeof Theme;
 declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
 }

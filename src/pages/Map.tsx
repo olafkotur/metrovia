@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
+import { LargeButton, Spacer, VeryLargeText } from 'react-otio';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { LargeButton, MapBackground, Spacer, VeryLargeText } from '../components';
+import { MapBackground } from '../components/MapBackground';
 import { SelectedMapState } from '../state';
-import { DEFAULT_THEME } from '../style/theme';
+import { Theme } from '../theme';
 import { MapName, RouteName } from '../typings';
 
 const MapContainer = styled.div`
@@ -30,7 +31,7 @@ export const Map = (): ReactElement => {
         <MapButton disabled name={MapName.PARIS} />
         <MapButton disabled name={MapName.OSLO} />
 
-        <LargeButton bg={DEFAULT_THEME.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
+        <LargeButton bg={Theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
           Done
         </LargeButton>
       </MapContainer>
@@ -43,7 +44,7 @@ export const Map = (): ReactElement => {
 const MapButton = ({ name, disabled = false }: { name: MapName; disabled?: boolean }): ReactElement => {
   const [selectedMap, setSelectedMap] = useRecoilState(SelectedMapState);
 
-  const background = selectedMap === name ? DEFAULT_THEME.backgroundColor.selected : undefined;
+  const background = selectedMap === name ? Theme.backgroundColor.selected : undefined;
 
   return (
     <LargeButton disabled={disabled} bg={background} onClick={() => setSelectedMap(name)}>

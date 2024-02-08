@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { createGlobalStyle, ThemeProvider as DefaultThemeProvider } from 'styled-components';
-import { DEFAULT_THEME } from './theme';
+import { Theme } from '../theme';
 
 // always at the end
 import '@fontsource/inter';
@@ -32,7 +32,7 @@ interface Props {
 
 export const ThemeProvider = ({ children }: Props): ReactElement => {
   return (
-    <DefaultThemeProvider theme={DEFAULT_THEME}>
+    <DefaultThemeProvider theme={Theme}>
       <GlobalStyle />
       {children}
     </DefaultThemeProvider>

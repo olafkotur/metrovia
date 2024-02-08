@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { useShowStations } from '../hooks';
+import { useShowStations } from '../hooks/use-show-stations';
 import { LondonMap } from '../maps/London';
 import { SelectedMapState } from '../state';
 import { MapName } from '../typings';

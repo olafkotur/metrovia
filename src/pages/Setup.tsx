@@ -1,9 +1,11 @@
 import React, { ReactElement } from 'react';
+import { LargeButton, Spacer, VeryLargeText } from 'react-otio';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { LargeButton, MapBackground, Spacer, VeryLargeText } from '../components';
-import { useShowStations, useStartGame } from '../hooks';
-import { DEFAULT_THEME } from '../style/theme';
+import { MapBackground } from '../components/MapBackground';
+import { useShowStations } from '../hooks/use-show-stations';
+import { useStartGame } from '../hooks/use-start-game';
+import { Theme } from '../theme';
 import { RouteName } from '../typings';
 
 const SetupContainer = styled.div`
@@ -37,7 +39,7 @@ export const Setup = (): ReactElement => {
 
         <Spacer vertical={30} />
 
-        <LargeButton bg={DEFAULT_THEME.highlightColor.primary} onClick={handleStartGame}>
+        <LargeButton bg={Theme.highlightColor.primary} onClick={handleStartGame}>
           Start Game
         </LargeButton>
         <LargeButton onClick={handlePreview}>Preview map</LargeButton>

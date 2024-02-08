@@ -1,10 +1,10 @@
 import React, { ReactElement, useCallback, useMemo } from 'react';
+import { Button, Icon, IconName, SmallText, VerySmallText } from 'react-otio';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { Button, Icon, SmallText, VerySmallText } from '../components';
 import { LinesState, SelectedModeState, StationsState } from '../state';
-import { DEFAULT_THEME } from '../style/theme';
-import { IconName, Line as LineType, ModeName } from '../typings';
+import { Theme } from '../theme';
+import { Line as LineType, ModeName } from '../typings';
 
 const Container = styled.div`
   display: flex;
@@ -64,7 +64,7 @@ const Line = ({ onClick, ...data }: LineType & { onClick: (value: LineType) => v
   const stations = useRecoilValue(StationsState);
   const selectedMode = useRecoilValue(SelectedModeState);
 
-  const background = data.visible ? data.color : DEFAULT_THEME.backgroundColor.faint;
+  const background = data.visible ? data.color : Theme.backgroundColor.faint;
 
   const lineStations = useMemo(() => {
     return stations.filter((station) => station.lines.includes(data.id));
@@ -78,13 +78,13 @@ const Line = ({ onClick, ...data }: LineType & { onClick: (value: LineType) => v
 
   return (
     <LineContainer bg={background} onClick={() => onClick(data)} disabled={selectedMode !== ModeName.CUSTOM_LINES}>
-      <SmallText color={DEFAULT_THEME.color.white}>{data.name}</SmallText>
+      <SmallText color={Theme.color.white}>{data.name}</SmallText>
       {data.visible && isComplete === false && (
-        <VerySmallText color={DEFAULT_THEME.color.white}>
+        <VerySmallText color={Theme.color.white}>
           {visibleStationCount}/{lineStations.length}
         </VerySmallText>
       )}
-      {isComplete && <Icon name={IconName.CIRCLE_CHECK} color={DEFAULT_THEME.color.white} opacity={1} />}
+      {isComplete && <Icon name={IconName.CIRCLE_CHECK} color={Theme.color.white} opacity={1} />}
     </LineContainer>
   );
 };

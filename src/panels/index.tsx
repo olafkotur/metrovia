@@ -1,10 +1,9 @@
 import React, { ReactElement, useCallback, useMemo } from 'react';
+import { Icon, IconButton, IconName, Spacer, useOnKeyPress } from 'react-otio';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Icon, IconButton, Spacer } from '../components';
-import { useOnKeyPress } from '../hooks';
 import { ModalState, PanelState } from '../state';
-import { IconName, PanelName } from '../typings';
+import { PanelName } from '../typings';
 import { Lines } from './Lines';
 
 const PanelContainer = styled.div`
@@ -78,7 +77,7 @@ export const Panels = (): ReactElement => {
         <PanelContent>
           <PanelHeader>
             <CloseButton onClick={resetPanel}>
-              <Icon name={IconName.CLOSE} />
+              <Icon name={IconName.XMARK} />
             </CloseButton>
           </PanelHeader>
           <Spacer vertical={5} />

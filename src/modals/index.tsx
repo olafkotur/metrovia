@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
 import React, { ReactElement } from 'react';
+import { useOnKeyPress } from 'react-otio';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { useOnKeyPress } from '../hooks';
 import { ModalState } from '../state';
-import { Fade } from '../style/animations';
 import { ModalName } from '../typings';
 import { GameStatus } from './GameStatus';
 
@@ -47,7 +46,7 @@ export const Modals = (): ReactElement => {
   }
 
   return (
-    <ModalContainer {...Fade({})} transition={{ duration: 0.1 }}>
+    <ModalContainer>
       <ModalBackdrop onClick={resetModal} />
       <ModalContent>{modal === ModalName.GAME_STATUS && <GameStatus />}</ModalContent>
     </ModalContainer>

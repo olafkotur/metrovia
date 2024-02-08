@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
+import { ThemeProvider } from './components/Provider';
 import { Modals } from './modals';
 import { Game } from './pages/Game';
 import { Map } from './pages/Map';
@@ -11,7 +12,6 @@ import { Mode } from './pages/Mode';
 import { Preview } from './pages/Preview';
 import { Setup } from './pages/Setup';
 import { Panels } from './panels';
-import { ThemeProvider } from './style/Provider';
 import { RouteName } from './typings';
 
 const queryClient = new QueryClient({

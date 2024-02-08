@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
+import { LargeButton, Spacer, VeryLargeText } from 'react-otio';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { LargeButton, MapBackground, Spacer, VeryLargeText } from '../components';
+import { MapBackground } from '../components/MapBackground';
 import { SelectedModeState } from '../state';
-import { DEFAULT_THEME } from '../style/theme';
+import { Theme } from '../theme';
 import { ModeName, RouteName } from '../typings';
 
 const ModeContainer = styled.div`
@@ -30,7 +31,7 @@ export const Mode = (): ReactElement => {
         <ModeButton name={ModeName.UNLIMITED} />
         <ModeButton name={ModeName.CUSTOM_LINES} />
 
-        <LargeButton bg={DEFAULT_THEME.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
+        <LargeButton bg={Theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
           Done
         </LargeButton>
       </ModeContainer>
@@ -43,7 +44,7 @@ export const Mode = (): ReactElement => {
 const ModeButton = ({ name, disabled = false }: { name: ModeName; disabled?: boolean }): ReactElement => {
   const [selectedMode, setSelectedMode] = useRecoilState(SelectedModeState);
 
-  const background = selectedMode === name ? DEFAULT_THEME.backgroundColor.selected : undefined;
+  const background = selectedMode === name ? Theme.backgroundColor.selected : undefined;
 
   return (
     <LargeButton disabled={disabled} bg={background} onClick={() => setSelectedMode(name)}>

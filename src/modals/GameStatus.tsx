@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
+import { LargeButton, LargeText, MediumText, SpaceBetweenContainer, Spacer } from 'react-otio';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { LargeButton, LargeText, MediumText, SpaceBetweenContainer, Spacer } from '../components';
-import { useStartGame } from '../hooks';
+import { useStartGame } from '../hooks/use-start-game';
 import { GameStatusState, ModalState, PanelState } from '../state';
-import { DEFAULT_THEME } from '../style/theme';
+import { Theme } from '../theme';
 import { GameStatusName, RouteName } from '../typings';
 
 const Container = styled.div`
@@ -48,7 +48,7 @@ const SuccessContent = (): ReactElement => {
       <Spacer vertical={5} />
 
       <SingleButton
-        bg={DEFAULT_THEME.highlightColor.primary}
+        bg={Theme.highlightColor.primary}
         onClick={() => {
           navigate(RouteName.SETUP);
           resetModal();
@@ -76,7 +76,7 @@ const FailedContent = (): ReactElement => {
       <Spacer vertical={5} />
 
       <SingleButton
-        bg={DEFAULT_THEME.highlightColor.primary}
+        bg={Theme.highlightColor.primary}
         onClick={() => {
           navigate(RouteName.SETUP);
           resetModal();
@@ -105,7 +105,7 @@ const ResetContent = (): ReactElement => {
 
       <SpaceBetweenContainer>
         <DualButton
-          bg={DEFAULT_THEME.highlightColor.primary}
+          bg={Theme.highlightColor.primary}
           onClick={() => {
             startGame();
             resetModal();
@@ -136,7 +136,7 @@ const ExitContent = (): ReactElement => {
 
       <SpaceBetweenContainer>
         <DualButton
-          bg={DEFAULT_THEME.highlightColor.primary}
+          bg={Theme.highlightColor.primary}
           onClick={() => {
             navigate(RouteName.SETUP);
             resetModal();
