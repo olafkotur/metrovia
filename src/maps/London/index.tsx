@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useMapZoom } from '../../hooks/use-map-zoom';
 import { LinesState, StationsState } from '../../state';
+import { Theme } from '../../theme';
 
 const initialViewbox = { x: 64.094, y: 122.25, width: 985.889, height: 657.072 };
 
@@ -31,11 +32,19 @@ export const LondonMap = (): ReactElement => {
     }
   };
 
+  const setColor = () => {
+    const textElements = document.querySelectorAll('text, tspan');
+    textElements.forEach((element: any) => {
+      element.style.fill = Theme.color.faint;
+    });
+  };
+
   useMapZoom({ ref, initialViewbox });
 
   useEffect(() => {
     removeLines();
     removeStations();
+    setColor();
   }, [lines, stations]);
 
   return (

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { LargeButton, Spacer, VeryLargeText } from 'react-otio';
+import { Card, LargeButton, MediumText, Spacer, VeryLargeText } from 'react-otio';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -23,17 +23,25 @@ export const Map = (): ReactElement => {
   return (
     <>
       <MapContainer>
-        <VeryLargeText>Choose map</VeryLargeText>
+        <Card height="auto" width="200px" center>
+          <VeryLargeText>Choose map</VeryLargeText>
+        </Card>
 
-        <Spacer vertical={30} />
+        <Spacer vertical={10} />
+        <Card height="auto">
+          <MapButton name={MapName.LONDON} />
 
-        <MapButton name={MapName.LONDON} />
-        <MapButton disabled name={MapName.PARIS} />
-        <MapButton disabled name={MapName.OSLO} />
+          <Spacer vertical={5} />
+          <MapButton disabled name={MapName.PARIS} />
 
-        <LargeButton bg={Theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
-          Done
-        </LargeButton>
+          <Spacer vertical={5} />
+          <MapButton disabled name={MapName.OSLO} />
+
+          <Spacer vertical={5} />
+          <LargeButton width="200px" bg={Theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
+            <MediumText color={Theme.color.white}>Done</MediumText>
+          </LargeButton>
+        </Card>
       </MapContainer>
 
       <MapBackground />
@@ -44,12 +52,17 @@ export const Map = (): ReactElement => {
 const MapButton = ({ name, disabled = false }: { name: MapName; disabled?: boolean }): ReactElement => {
   const [selectedMap, setSelectedMap] = useRecoilState(SelectedMapState);
 
-  const background = selectedMap === name ? Theme.backgroundColor.selected : undefined;
-
   return (
-    <LargeButton disabled={disabled} bg={background} onClick={() => setSelectedMap(name)}>
-      {name}
-      {disabled ? ' (coming soon)' : ''}
+    <LargeButton
+      width="200px"
+      disabled={disabled}
+      bg={selectedMap === name ? Theme.backgroundColor.selected : Theme.backgroundColor.primary}
+      onClick={() => setSelectedMap(name)}
+    >
+      <MediumText>
+        {name}
+        {disabled ? ' (coming soon)' : ''}
+      </MediumText>
     </LargeButton>
   );
 };

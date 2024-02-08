@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { LargeButton, Spacer, VeryLargeText } from 'react-otio';
+import { Card, LargeButton, Spacer, VeryLargeText } from 'react-otio';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -23,17 +23,25 @@ export const Mode = (): ReactElement => {
   return (
     <>
       <ModeContainer>
-        <VeryLargeText>Game mode</VeryLargeText>
+        <Card height="auto" width="200px" center>
+          <VeryLargeText>Game mode</VeryLargeText>
+        </Card>
 
-        <Spacer vertical={30} />
+        <Spacer vertical={10} />
+        <Card height="auto">
+          <ModeButton name={ModeName.TIME_LIMIT} />
 
-        <ModeButton name={ModeName.TIME_LIMIT} />
-        <ModeButton name={ModeName.UNLIMITED} />
-        <ModeButton name={ModeName.CUSTOM_LINES} />
+          <Spacer vertical={5} />
+          <ModeButton name={ModeName.UNLIMITED} />
 
-        <LargeButton bg={Theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
-          Done
-        </LargeButton>
+          <Spacer vertical={5} />
+          <ModeButton name={ModeName.CUSTOM_LINES} />
+
+          <Spacer vertical={5} />
+          <LargeButton width="200px" bg={Theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
+            Done
+          </LargeButton>
+        </Card>
       </ModeContainer>
 
       <MapBackground />
@@ -41,15 +49,16 @@ export const Mode = (): ReactElement => {
   );
 };
 
-const ModeButton = ({ name, disabled = false }: { name: ModeName; disabled?: boolean }): ReactElement => {
+const ModeButton = ({ name }: { name: ModeName }): ReactElement => {
   const [selectedMode, setSelectedMode] = useRecoilState(SelectedModeState);
 
-  const background = selectedMode === name ? Theme.backgroundColor.selected : undefined;
-
   return (
-    <LargeButton disabled={disabled} bg={background} onClick={() => setSelectedMode(name)}>
+    <LargeButton
+      width="200px"
+      bg={selectedMode === name ? Theme.backgroundColor.selected : Theme.backgroundColor.primary}
+      onClick={() => setSelectedMode(name)}
+    >
       {name}
-      {disabled ? ' (coming soon)' : ''}
     </LargeButton>
   );
 };

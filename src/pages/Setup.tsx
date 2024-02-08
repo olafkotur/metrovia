@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { LargeButton, Spacer, VeryLargeText } from 'react-otio';
+import { Card, LargeButton, MediumText, Spacer, VeryLargeText, useUpdateTitle } from 'react-otio';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MapBackground } from '../components/MapBackground';
@@ -32,19 +32,36 @@ export const Setup = (): ReactElement => {
     navigate(RouteName.PREVIEW);
   };
 
+  useUpdateTitle({ placeholder: 'MetroVia' });
+
   return (
     <>
       <SetupContainer>
-        <VeryLargeText>MetroVia</VeryLargeText>
+        <Card height="auto" width="200px" center>
+          <VeryLargeText>MetroVia</VeryLargeText>
+        </Card>
 
-        <Spacer vertical={30} />
+        <Spacer vertical={10} />
+        <Card height="auto">
+          <LargeButton width="200px" bg={Theme.backgroundColor.primary} onClick={() => navigate(RouteName.MAP)}>
+            <MediumText>Choose map</MediumText>
+          </LargeButton>
 
-        <LargeButton bg={Theme.highlightColor.primary} onClick={handleStartGame}>
-          Start Game
-        </LargeButton>
-        <LargeButton onClick={handlePreview}>Preview map</LargeButton>
-        <LargeButton onClick={() => navigate(RouteName.MAP)}>Change map</LargeButton>
-        <LargeButton onClick={() => navigate(RouteName.MODE)}>Game mode</LargeButton>
+          <Spacer vertical={5} />
+          <LargeButton width="200px" bg={Theme.backgroundColor.primary} onClick={handlePreview}>
+            <MediumText>Preview map</MediumText>
+          </LargeButton>
+
+          <Spacer vertical={5} />
+          <LargeButton width="200px" bg={Theme.backgroundColor.primary} onClick={() => navigate(RouteName.MODE)}>
+            <MediumText>Game mode</MediumText>
+          </LargeButton>
+
+          <Spacer vertical={5} />
+          <LargeButton width="200px" bg={Theme.highlightColor.primary} onClick={handleStartGame}>
+            <MediumText color={Theme.color.white}>Start Game</MediumText>
+          </LargeButton>
+        </Card>
       </SetupContainer>
 
       <MapBackground />

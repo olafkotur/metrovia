@@ -25,24 +25,25 @@ export const Theme = {
     veryLarge: '20px',
   },
   color: {
-    faint: 'rgba(0, 0, 0, 0.4)',
-    normal: 'rgba(0, 0, 0, 1)',
+    faint: 'rgba(255, 255, 255, 0.6)',
+    normal: 'rgba(255, 255, 255, 1)',
     danger: 'rgba(227, 66, 66, 0.8)',
-    inverted: '#ecf0f1',
+    inverted: '#32323E',
     white: '#ecf0f1',
     black: '#32323E',
   },
   backgroundColor: {
-    primary: '#DFE6E9',
-    secondary: '#F2F5F7',
-    tertiary: 'rgba(0, 0, 0, 0.8)',
-    faint: '#56504E',
-    selected: '#2A2727',
-    backdrop: 'rgba(0, 0, 0, 0.9)',
+    primary: '#13121B',
+    secondary: '#20202B',
+    tertiary: '#ecf0f1',
+    faint: 'rgba(255, 255, 255, 0.2)',
+    selected: 'rgba(255, 255, 255, 0.2)',
+    backdrop: 'rgba(0, 0, 0, 0.8)',
+    transparent: 'transparent',
   },
   highlightColor: {
     primary: '#29804C', // green
-    secondary: '#7C40C7', // purple
+    secondary: '#495FD1', // blue
     tertiary: '#DBAD39', // yellow
     quaternary: '#E34242', // red
   },
@@ -51,13 +52,9 @@ export const Theme = {
     strong: '0px 12px 12px rgba(0, 0, 0, 0.4)',
   },
   zIndex: {
-    sidebar: 1000,
-    notifications: 2000,
     backdrop: 5000,
     panel: 7000,
     modal: 7500,
-    alert: 7500,
-    actions: 7500,
     tooltip: 10000,
   },
   breakpoints: {
