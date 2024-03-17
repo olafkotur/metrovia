@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import { Icon, IconButton, IconName } from 'react-otio';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useTheme } from '../hooks/use-theme';
 import { LondonMap } from '../maps/London';
-import { Theme } from '../theme';
 import { RouteName } from '../typings';
 
 const PreviewContainer = styled.div`
@@ -23,9 +23,11 @@ const CloseButton = styled(IconButton)`
 export const Preview = (): ReactElement => {
   const navigate = useNavigate();
 
+  const theme = useTheme();
+
   return (
     <PreviewContainer>
-      <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)} bg={Theme.color.danger}>
+      <CloseButton size={28} onClick={() => navigate(RouteName.SETUP)} bg={theme.color.danger}>
         <Icon name={IconName.XMARK} size={22} />
       </CloseButton>
       <LondonMap showControls />

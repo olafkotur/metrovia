@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { MapBackground } from '../components/MapBackground';
+import { useTheme } from '../hooks/use-theme';
 import { SelectedMapState } from '../state';
-import { Theme } from '../theme';
 import { MapName, RouteName } from '../typings';
 
 const MapContainer = styled.div`
@@ -19,6 +19,8 @@ const MapContainer = styled.div`
 
 export const Map = (): ReactElement => {
   const navigate = useNavigate();
+
+  const theme = useTheme();
 
   return (
     <>
@@ -38,8 +40,8 @@ export const Map = (): ReactElement => {
           <MapButton disabled name={MapName.OSLO} />
 
           <Spacer vertical={5} />
-          <LargeButton width="200px" bg={Theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
-            <MediumText color={Theme.color.white}>Done</MediumText>
+          <LargeButton width="200px" bg={theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
+            <MediumText color={theme.color.white}>Done</MediumText>
           </LargeButton>
         </Card>
       </MapContainer>
@@ -52,11 +54,13 @@ export const Map = (): ReactElement => {
 const MapButton = ({ name, disabled = false }: { name: MapName; disabled?: boolean }): ReactElement => {
   const [selectedMap, setSelectedMap] = useRecoilState(SelectedMapState);
 
+  const theme = useTheme();
+
   return (
     <LargeButton
       width="200px"
       disabled={disabled}
-      bg={selectedMap === name ? Theme.backgroundColor.selected : Theme.backgroundColor.primary}
+      bg={selectedMap === name ? theme.backgroundColor.selected : theme.backgroundColor.primary}
       onClick={() => setSelectedMap(name)}
     >
       <MediumText>

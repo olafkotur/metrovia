@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { useStartGame } from '../hooks/use-start-game';
+import { useTheme } from '../hooks/use-theme';
 import { GameStatusState, ModalState, PanelState } from '../state';
-import { Theme } from '../theme';
 import { GameStatusName, RouteName } from '../typings';
 
 const Container = styled.div`
   width: 400px;
 
-  @media (max-width: ${Theme.breakpoints.mobile}px) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
     width: 80vw;
   }
 `;
@@ -42,6 +42,8 @@ const SuccessContent = (): ReactElement => {
   const resetPanel = useResetRecoilState(PanelState);
   const navigate = useNavigate();
 
+  const theme = useTheme();
+
   return (
     <>
       <LargeText>Congratulations</LargeText>
@@ -52,7 +54,7 @@ const SuccessContent = (): ReactElement => {
       <Spacer vertical={5} />
 
       <SingleButton
-        bg={Theme.highlightColor.primary}
+        bg={theme.highlightColor.primary}
         onClick={() => {
           navigate(RouteName.SETUP);
           resetModal();
@@ -70,6 +72,8 @@ const FailedContent = (): ReactElement => {
   const resetPanel = useResetRecoilState(PanelState);
   const navigate = useNavigate();
 
+  const theme = useTheme();
+
   return (
     <>
       <LargeText>Uh oh...</LargeText>
@@ -80,7 +84,7 @@ const FailedContent = (): ReactElement => {
       <Spacer vertical={5} />
 
       <SingleButton
-        bg={Theme.highlightColor.primary}
+        bg={theme.highlightColor.primary}
         onClick={() => {
           navigate(RouteName.SETUP);
           resetModal();
@@ -98,6 +102,8 @@ const ResetContent = (): ReactElement => {
   const resetPanel = useResetRecoilState(PanelState);
   const startGame = useStartGame();
 
+  const theme = useTheme();
+
   return (
     <>
       <LargeText>Are you sure?</LargeText>
@@ -109,7 +115,7 @@ const ResetContent = (): ReactElement => {
 
       <SpaceBetweenContainer>
         <DualButton
-          bg={Theme.highlightColor.primary}
+          bg={theme.highlightColor.primary}
           onClick={() => {
             startGame();
             resetModal();
@@ -130,6 +136,8 @@ const ExitContent = (): ReactElement => {
   const resetPanel = useResetRecoilState(PanelState);
   const navigate = useNavigate();
 
+  const theme = useTheme();
+
   return (
     <>
       <LargeText>Are you sure?</LargeText>
@@ -141,7 +149,7 @@ const ExitContent = (): ReactElement => {
 
       <SpaceBetweenContainer>
         <DualButton
-          bg={Theme.highlightColor.primary}
+          bg={theme.highlightColor.primary}
           onClick={() => {
             navigate(RouteName.SETUP);
             resetModal();

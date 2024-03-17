@@ -1,9 +1,6 @@
 import React, { ReactElement } from 'react';
 import { createGlobalStyle, ThemeProvider as DefaultThemeProvider } from 'styled-components';
-import { Theme } from '../theme';
-
-// always at the end
-import '@fontsource/inter';
+import { useTheme } from '../hooks/use-theme';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -31,8 +28,10 @@ interface Props {
 }
 
 export const ThemeProvider = ({ children }: Props): ReactElement => {
+  const theme = useTheme();
+
   return (
-    <DefaultThemeProvider theme={Theme}>
+    <DefaultThemeProvider theme={theme}>
       <GlobalStyle />
       {children}
     </DefaultThemeProvider>

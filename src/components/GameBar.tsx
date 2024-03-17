@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import { MATCH_DELAY_MS } from '../const';
 import { useFormatRemainingTime } from '../hooks/use-format-remaining-time';
 import { useMatchStation } from '../hooks/use-match-station';
+import { useTheme } from '../hooks/use-theme';
 import {
   GameStatusState,
   LinesState,
@@ -25,7 +26,6 @@ import {
   SelectedModeState,
   StationsState,
 } from '../state';
-import { Theme } from '../theme';
 import { GameStatusName, ModalName, ModeName, PanelName } from '../typings';
 
 const sound = new Audio('ding.mp3');
@@ -87,6 +87,8 @@ export const GameBar = (): ReactElement => {
   const selectedMode = useRecoilValue(SelectedModeState);
   const setModal = useSetRecoilState(ModalState);
   const setGameStatus = useSetRecoilState(GameStatusState);
+
+  const theme = useTheme();
 
   const matchStation = useMatchStation();
   const formatRemainingTime = useFormatRemainingTime();
@@ -173,7 +175,7 @@ export const GameBar = (): ReactElement => {
         <Spacer horizontal={5} />
 
         {selectedMode === ModeName.TIME_LIMIT && (
-          <TimeText faint color={remainingTime === '00:00' ? Theme.color.danger : undefined}>
+          <TimeText faint color={remainingTime === '00:00' ? theme.color.danger : undefined}>
             {remainingTime}
           </TimeText>
         )}
@@ -185,7 +187,7 @@ export const GameBar = (): ReactElement => {
         <IconButton
           tooltip="Toggle lines panel"
           size={28}
-          bg={panel === PanelName.LINES ? Theme.backgroundColor.selected : undefined}
+          bg={panel === PanelName.LINES ? theme.backgroundColor.selected : undefined}
           onClick={() => setPanel(panel === PanelName.LINES ? null : PanelName.LINES)}
         >
           <Icon name={IconName.TRAIN} size={20} />
@@ -194,7 +196,7 @@ export const GameBar = (): ReactElement => {
           <Icon
             size={20}
             name={IconName.VOLUME_LOW}
-            color={muted ? Theme.color.danger : undefined}
+            color={muted ? theme.color.danger : undefined}
             opacity={muted ? 1 : undefined}
           />
         </IconButton>

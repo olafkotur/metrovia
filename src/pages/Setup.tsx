@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { MapBackground } from '../components/MapBackground';
 import { useShowStations } from '../hooks/use-show-stations';
 import { useStartGame } from '../hooks/use-start-game';
-import { Theme } from '../theme';
+import { useTheme, useToggleTheme } from '../hooks/use-theme';
 import { RouteName } from '../typings';
 
 const SetupContainer = styled.div`
@@ -21,6 +21,9 @@ export const Setup = (): ReactElement => {
   const navigate = useNavigate();
   const startGame = useStartGame();
   const showStations = useShowStations();
+  const toggleTheme = useToggleTheme();
+
+  const theme = useTheme();
 
   const handleStartGame = () => {
     startGame();
@@ -43,23 +46,28 @@ export const Setup = (): ReactElement => {
 
         <Spacer vertical={10} />
         <Card height="auto">
-          <LargeButton width="200px" bg={Theme.backgroundColor.primary} onClick={() => navigate(RouteName.MAP)}>
+          <LargeButton width="200px" bg={theme.backgroundColor.primary} onClick={() => navigate(RouteName.MAP)}>
             <MediumText>Choose map</MediumText>
           </LargeButton>
 
           <Spacer vertical={5} />
-          <LargeButton width="200px" bg={Theme.backgroundColor.primary} onClick={handlePreview}>
+          <LargeButton width="200px" bg={theme.backgroundColor.primary} onClick={handlePreview}>
             <MediumText>Preview map</MediumText>
           </LargeButton>
 
           <Spacer vertical={5} />
-          <LargeButton width="200px" bg={Theme.backgroundColor.primary} onClick={() => navigate(RouteName.MODE)}>
+          <LargeButton width="200px" bg={theme.backgroundColor.primary} onClick={() => navigate(RouteName.MODE)}>
             <MediumText>Game mode</MediumText>
           </LargeButton>
 
           <Spacer vertical={5} />
-          <LargeButton width="200px" bg={Theme.highlightColor.primary} onClick={handleStartGame}>
-            <MediumText color={Theme.color.white}>Start Game</MediumText>
+          <LargeButton width="200px" bg={theme.backgroundColor.primary} onClick={toggleTheme}>
+            <MediumText>Toggle theme</MediumText>
+          </LargeButton>
+
+          <Spacer vertical={5} />
+          <LargeButton width="200px" bg={theme.highlightColor.primary} onClick={handleStartGame}>
+            <MediumText color={theme.color.white}>Start Game</MediumText>
           </LargeButton>
         </Card>
       </SetupContainer>

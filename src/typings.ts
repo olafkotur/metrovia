@@ -1,5 +1,6 @@
 export type Lines = Record<string, boolean>;
 export type Stations = Record<string, boolean>;
+export type Theme = 'light' | 'dark';
 
 export enum Environment {
   LOCAL = 'local',

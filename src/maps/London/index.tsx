@@ -3,8 +3,8 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { MapControls } from '../../components/MapControls';
 import { useMapControls } from '../../hooks/use-map-controls';
+import { useTheme } from '../../hooks/use-theme';
 import { LinesState, StationsState } from '../../state';
-import { Theme } from '../../theme';
 
 const MapControlsContainer = styled.div`
   position: absolute;
@@ -16,6 +16,8 @@ export const LondonMap = ({ showControls }: { showControls?: boolean }): ReactEl
   const ref = useRef(null);
   const lines = useRecoilValue(LinesState);
   const stations = useRecoilValue(StationsState);
+
+  const theme = useTheme();
 
   const removeLines = () => {
     for (const line of lines) {
@@ -41,7 +43,7 @@ export const LondonMap = ({ showControls }: { showControls?: boolean }): ReactEl
   const setColor = () => {
     const textElements = document.querySelectorAll('text, tspan');
     textElements.forEach((element: any) => {
-      element.style.fill = Theme.color.faint;
+      element.style.fill = theme.color.faint;
     });
   };
 

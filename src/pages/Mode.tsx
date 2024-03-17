@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { MapBackground } from '../components/MapBackground';
+import { useTheme } from '../hooks/use-theme';
 import { SelectedModeState } from '../state';
-import { Theme } from '../theme';
 import { ModeName, RouteName } from '../typings';
 
 const ModeContainer = styled.div`
@@ -19,6 +19,8 @@ const ModeContainer = styled.div`
 
 export const Mode = (): ReactElement => {
   const navigate = useNavigate();
+
+  const theme = useTheme();
 
   return (
     <>
@@ -38,7 +40,7 @@ export const Mode = (): ReactElement => {
           <ModeButton name={ModeName.CUSTOM_LINES} />
 
           <Spacer vertical={5} />
-          <LargeButton width="200px" bg={Theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
+          <LargeButton width="200px" bg={theme.highlightColor.primary} onClick={() => navigate(RouteName.SETUP)}>
             Done
           </LargeButton>
         </Card>
@@ -52,10 +54,12 @@ export const Mode = (): ReactElement => {
 const ModeButton = ({ name }: { name: ModeName }): ReactElement => {
   const [selectedMode, setSelectedMode] = useRecoilState(SelectedModeState);
 
+  const theme = useTheme();
+
   return (
     <LargeButton
       width="200px"
-      bg={selectedMode === name ? Theme.backgroundColor.selected : Theme.backgroundColor.primary}
+      bg={selectedMode === name ? theme.backgroundColor.selected : theme.backgroundColor.primary}
       onClick={() => setSelectedMode(name)}
     >
       {name}

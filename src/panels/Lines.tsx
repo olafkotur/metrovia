@@ -2,8 +2,8 @@ import React, { ReactElement, useCallback, useMemo } from 'react';
 import { Button, Icon, IconName, SmallText, VerySmallText } from 'react-otio';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { useTheme } from '../hooks/use-theme';
 import { LinesState, SelectedModeState, StationsState } from '../state';
-import { Theme } from '../theme';
 import { Line as LineType, ModeName } from '../typings';
 
 const Container = styled.div`
@@ -15,6 +15,8 @@ const Container = styled.div`
 export const Lines = (): ReactElement => {
   const [lines, setLines] = useRecoilState(LinesState);
   const [stations, setStations] = useRecoilState(StationsState);
+
+  const theme = useTheme();
 
   const handleOnClick = useCallback(
     (line: LineType) => {
@@ -64,7 +66,9 @@ const Line = ({ onClick, ...data }: LineType & { onClick: (value: LineType) => v
   const stations = useRecoilValue(StationsState);
   const selectedMode = useRecoilValue(SelectedModeState);
 
-  const background = data.visible ? data.color : Theme.backgroundColor.faint;
+  const theme = useTheme();
+
+  const background = data.visible ? data.color : theme.backgroundColor.faint;
 
   const lineStations = useMemo(() => {
     return stations.filter((station) => station.lines.includes(data.id));
@@ -78,13 +82,13 @@ const Line = ({ onClick, ...data }: LineType & { onClick: (value: LineType) => v
 
   return (
     <LineContainer bg={background} onClick={() => onClick(data)} disabled={selectedMode !== ModeName.CUSTOM_LINES}>
-      <SmallText color={Theme.color.white}>{data.name}</SmallText>
+      <SmallText color={theme.color.white}>{data.name}</SmallText>
       {data.visible && isComplete === false && (
-        <VerySmallText color={Theme.color.white}>
+        <VerySmallText color={theme.color.white}>
           {visibleStationCount}/{lineStations.length}
         </VerySmallText>
       )}
-      {isComplete && <Icon name={IconName.CIRCLE_CHECK} color={Theme.color.white} opacity={1} />}
+      {isComplete && <Icon name={IconName.CIRCLE_CHECK} color={theme.color.white} opacity={1} />}
     </LineContainer>
   );
 };
