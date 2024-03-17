@@ -17,6 +17,10 @@ const PanelContainer = styled.div`
   filter: drop-shadow(${(props) => props.theme.dropShadow.strong});
   background: ${(props) => props.theme.backgroundColor.secondary};
   z-index: ${(props) => props.theme.zIndex.panel};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    width: calc(100vw - 10px);
+  }
 `;
 
 const PanelBackdrop = styled.div`

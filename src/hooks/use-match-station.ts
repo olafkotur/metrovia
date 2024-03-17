@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Station } from '../typings';
 
 const MATCH_REGEX = /[^a-z0-9]/g;
-const BLACKLISTED_WORDS = ['and'];
+const BLACKLISTED_WORDS = [' and '];
 
 export const useMatchStation = () => {
   return useCallback((value: string, stations: Station[]) => {
